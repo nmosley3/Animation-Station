@@ -25,67 +25,46 @@ class Balloon{
     this.direction = 1;
  
    balloon = createShape(GROUP);
+   //pushMatrix();
    
    sphere = createShape(SPHERE,radius);
+   pushMatrix();
+   //sphere.translate(x,y,z);
+   
    sphere.setFill(c);
    sphere.setStroke(c);
+   popMatrix();
+   //popMatrix();
    
    
-   //cone = createShape();
-   //cone.beginShape();
-   //float angle = 360 / 20;
-   //float halfHeight = triangle_height / 2;
-   // // top
-   // beginShape();
-   // for (int i = 0; i < 20; i++) {
-   //     float x_c = cos( radians( i * angle ) ) * (radius/10);
-   //     float y_c = sin( radians( i * angle ) ) * (radius/10);
-   //     vertex( x_c, y_c, -halfHeight);
-   // }
-   // endShape(CLOSE);
-   // // bottom
-   // beginShape();
-   // for (int i = 0; i < 20; i++) {
-   //     float x_c = cos( radians( i * angle ) ) * (radius/5);
-   //     float y_c = sin( radians( i * angle ) ) * (radius/5);
-   //     vertex( x_c, y_c, halfHeight);
-   // }
-   // endShape(CLOSE);
-   // // draw body
-   // beginShape(TRIANGLE_STRIP);
-   // for (int i = 0; i < 20 + 1; i++) {
-   //     float x1 = cos( radians( i * angle ) ) * (radius/10);
-   //     float y1 = sin( radians( i * angle ) ) * (radius/10);
-   //     float x2 = cos( radians( i * angle ) ) * (radius/5);
-   //     float y2 = sin( radians( i * angle ) ) * (radius/5);
-   //     vertex( x1, y1, -halfHeight);
-   //     vertex( x2, y2, halfHeight);
-   // }
-   // endShape(CLOSE);
-   //cone.endShape();
    
    string = createShape();
    string.beginShape();
-   string.vertex(x,y+radius,z);
-   string.bezierVertex(x+(radius/1.6), y+(radius*1.8),z,x+(radius/2.2),y+(radius*1.5),z,x,y+(radius*2.5),z);
-   string.bezierVertex(x-(radius*.5),y+(radius*2.8),z,x-radius,y+(radius*3.2),z,x,y+(radius*4.2),z);
+   //string.vertex(x,y+radius,z);
+   //string.bezierVertex(x+(radius/1.6), y+(radius*1.8),z,x+(radius/2.2),y+(radius*1.5),z,x,y+(radius*2.5),z);
+   //string.bezierVertex(x-(radius*.5),y+(radius*2.8),z,x-radius,y+(radius*3.2),z,x,y+(radius*4.2),z);
+   string.vertex(0,radius,0);
+   string.bezierVertex((radius/1.6), (radius*1.8),0,(radius/2.2),(radius*1.5), 0, 0 , (radius*2.5), 0);
+   string.bezierVertex((radius*.5),(radius*2.8), 0, radius, (radius*3.2), 0, 0, (radius*4.2), 0);
    string.noFill();
    string.endShape();
    
    //add everything to the group
    balloon.addChild(sphere);
-   //balloon.addChild(cone);
+
    balloon.addChild(string);
+
    
   }
   
    void display() {
    
    pushMatrix();
-   translate(x,y,z);
+   //translate(x,y,z);
    //shape(sphere);
    //translate(x-radius,y-radius,0);
    shape(balloon);
+   //translate(-x,-y,-z);
    popMatrix();
    
   }
@@ -96,7 +75,11 @@ class Balloon{
       
       this.x += inc_x;
       this.y += inc_y;
-      this.z += inc_z;    
+      this.z += inc_z;  
+      
+      pushMatrix();
+      balloon.translate(inc_x,inc_y,inc_z);
+      popMatrix();
     }
     
   }
@@ -106,7 +89,7 @@ class Balloon{
     pushMatrix();
     balloon.translate(x,y,z);
     balloon.rotateY(radians(1));
-    balloon.translate(-x,-y,z);
+    balloon.translate(-x,-y,-z);
     //shape(balloon);
     popMatrix();
     
@@ -125,6 +108,7 @@ class Balloon{
     string.translate(x,y+radius,z);
     string.rotate(radians(direction*0.5));
     string.translate(-x,-(y+radius),-z);
+    //shape(balloon);
     popMatrix();
     
     string_rotate += (direction*0.5);
