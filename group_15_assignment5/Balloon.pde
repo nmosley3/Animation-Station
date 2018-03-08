@@ -30,6 +30,7 @@ class Balloon{
    sphere.setFill(c);
    sphere.setStroke(c);
    
+   
    //cone = createShape();
    //cone.beginShape();
    //float angle = 360 / 20;
@@ -68,6 +69,7 @@ class Balloon{
    string.vertex(x,y+radius,z);
    string.bezierVertex(x+(radius/1.6), y+(radius*1.8),z,x+(radius/2.2),y+(radius*1.5),z,x,y+(radius*2.5),z);
    string.bezierVertex(x-(radius*.5),y+(radius*2.8),z,x-radius,y+(radius*3.2),z,x,y+(radius*4.2),z);
+   string.noFill();
    string.endShape();
    
    //add everything to the group
@@ -101,6 +103,12 @@ class Balloon{
   
   void rotate(){
     
+    pushMatrix();
+    balloon.translate(x,y,z);
+    balloon.rotateY(radians(1));
+    balloon.translate(-x,-y,z);
+    //shape(balloon);
+    popMatrix();
     
   }
   
