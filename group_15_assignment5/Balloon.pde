@@ -8,6 +8,7 @@ class Balloon{
   color c;
   float string_rotate;
   int direction;
+  int string_count = 0;
   
   PShape balloon, sphere, cone, string;
   
@@ -97,6 +98,44 @@ class Balloon{
   
   void shake_string(){
     
+   // if (string_count < 60){
+   //   string = createShape();
+   //   string.beginShape();
+   // //string.vertex(x,y+radius,z);
+   // //string.bezierVertex(x+(radius/1.6), y+(radius*1.8),z,x+(radius/2.2),y+(radius*1.5),z,x,y+(radius*2.5),z);
+   ////string.bezierVertex(x-(radius*.5),y+(radius*2.8),z,x-radius,y+(radius*3.2),z,x,y+(radius*4.2),z);
+   //  string.vertex(0,radius,0);
+   //  string.bezierVertex((radius/1.6), (radius*1.8),0,(radius/2.2),(radius*1.5), 0, 0 , (radius*2.5), 0);
+   //  string.bezierVertex((radius*.5),(radius*2.8), 0, radius, (radius*3.2), 0, 0, (radius*4.2), 0);
+   //  string.noFill();
+   //  string.endShape();
+     
+     
+   // }
+   // else if (string_count < 120){
+      
+   //   string = createShape();
+   //   string.beginShape();
+   // //string.vertex(x,y+radius,z);
+   // //string.bezierVertex(x+(radius/1.6), y+(radius*1.8),z,x+(radius/2.2),y+(radius*1.5),z,x,y+(radius*2.5),z);
+   ////string.bezierVertex(x-(radius*.5),y+(radius*2.8),z,x-radius,y+(radius*3.2),z,x,y+(radius*4.2),z);
+   //  string.vertex(0,radius,0);
+   //  string.bezierVertex((radius/2), (radius*1),0,(radius/-2.2),(radius*1.8), 0, 0 , (radius*3), 0);
+   //  string.bezierVertex((radius*1),(radius*2), 0, radius*0.8, (radius*2), 0, 0, (radius*3), 0);
+   //  string.noFill();
+   //  string.endShape();
+      
+   // }
+   // else if (string_count <180) {
+   // }
+   // else{
+   //   string_count = 0;
+   // }
+    
+   // string_count+=1;
+   // balloon.addChild(string);
+    
+    
     if (string_rotate == 10){
       direction = -1;
     }
@@ -106,7 +145,7 @@ class Balloon{
     
     pushMatrix();
     string.translate(x,y+radius,z);
-    string.rotate(radians(direction*0.5));
+    string.rotateY(radians(direction*0.5));
     string.translate(-x,-(y+radius),-z);
     //shape(balloon);
     popMatrix();
