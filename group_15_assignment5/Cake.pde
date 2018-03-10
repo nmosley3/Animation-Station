@@ -6,6 +6,8 @@ class Cake {
   PShape top2 = createShape();
   PShape bottom2 = createShape();
   PShape body2 = createShape();
+  PShape decal1 = createShape();
+  PShape decal2 = createShape();
   float x, y, z, r1, h1, r2, h2;
   
   Cake (float x, float y, float z, float r1, float h1, float r2, float h2) {
@@ -17,7 +19,7 @@ class Cake {
     this.r2 = r2;
     this.h2 = h2;
     
-    float angle = TWO_PI / 30;
+    float angle = TWO_PI / 60;
     float halfHeight1 = h1 / 2;
     float halfHeight2 = h2 / 2;
     float xx, yy;
@@ -40,15 +42,20 @@ class Cake {
     }
     bottom1.endShape(CLOSE);
     body1.beginShape(TRIANGLE_STRIP);
+    decal1.beginShape();
+    decal1.fill(0);
+    decal1.strokeWeight(4);
     body1.noStroke();
     body1.fill(color(#FCE9AF));
     for (float i = 0; i < TWO_PI; i += angle) {
       xx = cos(i) * r1;
       yy = sin(i) * r1;
-      body1.vertex( xx, halfHeight1, yy);
-      body1.vertex( xx, -halfHeight1, yy);
+      body1.vertex(xx, halfHeight1, yy);
+      body1.vertex(xx, -halfHeight1, yy);
+      decal1.vertex(xx, ((sin(i*5) * r1) * 0.1), yy);
       }
-    body1.endShape(CLOSE); 
+    body1.endShape(CLOSE);
+    decal1.endShape(CLOSE);
     
     // Second cylinder
     
@@ -69,20 +76,28 @@ class Cake {
     bottom2.endShape(CLOSE);
     body2.beginShape(TRIANGLE_STRIP);
     body2.noStroke();
+    decal2.beginShape();
+    decal2.fill(0);
+    decal2.strokeWeight(3);
     body2.fill(color(#FCE9AF));
     for (float i = 0; i < TWO_PI; i += angle) {
       xx = cos(i) * r2;
       yy = sin(i) * r2;
       body2.vertex( xx, halfHeight2 - h1, yy);
       body2.vertex( xx, -halfHeight2 - h1, yy);
+      decal2.vertex(xx, ((sin(i*5)) * r2 * 0.08) - h1, yy);
       }
     body2.endShape(CLOSE);
+    decal2.endShape(CLOSE);
+    
     birthdayCake.addChild(top1);
     birthdayCake.addChild(bottom1);
     birthdayCake.addChild(body1);
     birthdayCake.addChild(top2);
     birthdayCake.addChild(bottom2);
     birthdayCake.addChild(body2);
+    birthdayCake.addChild(decal1);
+    birthdayCake.addChild(decal2);
   }
   
   void display () {
@@ -90,6 +105,20 @@ class Cake {
     translate(this.x, this.y, this.z);
     //rotate(-frameCount);
     shape(birthdayCake);
+    popMatrix();
+    
+  }
+  
+  void spin () {
+    pushMatrix();
+    top1.rotateY(radians(1));
+    bottom1.rotateY(radians(1));
+    body1.rotateY(radians(1));
+    decal1.rotateY(radians(1));
+    top2.rotateY(-radians(1));
+    bottom2.rotateY(-radians(1));
+    body2.rotateY(-radians(1));
+    decal2.rotateY(-radians(1));
     popMatrix();
     
   }
