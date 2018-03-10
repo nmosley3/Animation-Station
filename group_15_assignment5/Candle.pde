@@ -24,10 +24,11 @@ class Candle {
   void display_candle() {
         
     pushMatrix();
-    translate(x,y,z);
     // Draws candle stem
     strokeWeight(3);
-    //rotateY(radians(frameCount));
+    translate(0, -110, -200);
+    rotateY(radians(frameCount));
+    translate(x,y + 110 ,z + 200);
     fill(Color);
     box(w,h,d);
     //PShape body = createShape(BOX,w,h,d);
@@ -35,9 +36,13 @@ class Candle {
     
     // Draws candle flame
     pushMatrix();
-    translate(x,y-45,z);
-    fill(232,187,89);
+    
+    translate(0, -110, -200);
     rotateY(radians(frameCount));
+    
+    translate(x,y-45 + 110 ,z + 200);
+    fill(232,187,89);
+    rotateY(radians(x*2 + frameCount * 8));
     box(w/5,h/4,d/2);
     popMatrix();
     //PShape flame = createShape(BOX,w/3,h/4,d/2);

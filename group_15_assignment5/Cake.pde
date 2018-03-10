@@ -8,6 +8,7 @@ class Cake {
   PShape body2 = createShape();
   PShape decal1 = createShape();
   PShape decal2 = createShape();
+  PShape cake;
   float x, y, z, r1, h1, r2, h2;
   
   Cake (float x, float y, float z, float r1, float h1, float r2, float h2) {
@@ -18,6 +19,7 @@ class Cake {
     this.h1 = h1;
     this.r2 = r2;
     this.h2 = h2;
+    this.cake = birthdayCake;
     
     float angle = TWO_PI / 60;
     float halfHeight1 = h1 / 2;
@@ -43,8 +45,7 @@ class Cake {
     bottom1.endShape(CLOSE);
     body1.beginShape(TRIANGLE_STRIP);
     decal1.beginShape();
-    decal1.fill(0);
-    decal1.strokeWeight(4);
+    decal1.strokeWeight(5);
     body1.noStroke();
     body1.fill(color(#FCE9AF));
     for (float i = 0; i < TWO_PI; i += angle) {
@@ -52,7 +53,7 @@ class Cake {
       yy = sin(i) * r1;
       body1.vertex(xx, halfHeight1, yy);
       body1.vertex(xx, -halfHeight1, yy);
-      decal1.vertex(xx, ((sin(i*5) * r1) * 0.1), yy);
+      decal1.vertex(xx, ((sin(i*6) * r1) * 0.1), yy);
       }
     body1.endShape(CLOSE);
     decal1.endShape(CLOSE);
@@ -77,15 +78,14 @@ class Cake {
     body2.beginShape(TRIANGLE_STRIP);
     body2.noStroke();
     decal2.beginShape();
-    decal2.fill(0);
-    decal2.strokeWeight(3);
+    decal2.strokeWeight(4);
     body2.fill(color(#FCE9AF));
     for (float i = 0; i < TWO_PI; i += angle) {
       xx = cos(i) * r2;
       yy = sin(i) * r2;
       body2.vertex( xx, halfHeight2 - h1, yy);
       body2.vertex( xx, -halfHeight2 - h1, yy);
-      decal2.vertex(xx, ((sin(i*5)) * r2 * 0.08) - h1, yy);
+      decal2.vertex(xx, ((sin(i*8)) * r2 * 0.08) - h1, yy);
       }
     body2.endShape(CLOSE);
     decal2.endShape(CLOSE);
@@ -114,11 +114,11 @@ class Cake {
     top1.rotateY(radians(1));
     bottom1.rotateY(radians(1));
     body1.rotateY(radians(1));
-    decal1.rotateY(radians(1));
+    decal1.rotateY(radians(1) * 0.5);
     top2.rotateY(-radians(1));
     bottom2.rotateY(-radians(1));
     body2.rotateY(-radians(1));
-    decal2.rotateY(-radians(1));
+    decal2.rotateY(-radians(1) * 0.5);
     popMatrix();
     
   }
