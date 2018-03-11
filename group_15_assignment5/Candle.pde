@@ -27,7 +27,7 @@ class Candle {
     // Draws candle stem
     strokeWeight(3);
     translate(0, -110, -200);
-    rotateY(radians(frameCount));
+    rotateY(-radians(frameCount));
     translate(x,y + 110 ,z + 200);
     fill(Color);
     box(w,h,d);
@@ -38,7 +38,7 @@ class Candle {
     pushMatrix();
     
     translate(0, -110, -200);
-    rotateY(radians(frameCount));
+    rotateY(-radians(frameCount));
     
     translate(x,y-45 + 110 ,z + 200);
     fill(232,187,89);

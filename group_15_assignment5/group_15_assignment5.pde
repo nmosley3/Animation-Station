@@ -10,7 +10,7 @@ PFont courier;
 
 void setup(){
   
-  size(800,800, P3D);
+  size(800, 800, P3D);
   b1 = new Balloon(0,-100,0,25,10,color(234,23,43));
   b2 = new Balloon(0,-200,0,30,10,color(89,19,188));
   BirthdayCake = new Cake(0, 200, -200, 100, 50, 80, 40);
@@ -29,7 +29,7 @@ void setup(){
 
 void draw(){
   
-  background(250,242,249);
+  background(#C5E0DC);
   
   if (frame_num < 180){
     camera(0,0,300,0,0,0,0,1,0);
