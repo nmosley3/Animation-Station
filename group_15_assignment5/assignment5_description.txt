@@ -1,8 +1,9 @@
 Intended Animation: 
 
-Our intention was to animate a birthday scene with candles, birthday cake and balloons,
+ Our intention was to animate a birthday scene with candles, birthday cake and balloons,
  title “Birthday Celebration”. The animation is about 15 seconds and loops through the 
-sequence continuously. 
+ sequence continuously. 
+
 
 Included Classes:
 
@@ -29,7 +30,8 @@ Cake - The cake class creates a two tiered take, with a curvy drawn horizontally
  weight. The display() function simply translates the cake to the specified x, y, and z
  positions given by the user as arguments in the function and displays the outermost
  PShape group. The spin() function rotates the lower tier of the cake clockwise on its
- y-axis, and the upper tier counter-clockwise. 
+ y-axis, and the upper tier counter-clockwise. The two tiers was primarily designed to 
+ allow for two seperate rotations. Nathan Mosley designed and implemented the cake class.
 
 Candle - The candle class includes attributes for the candle, such as color, dimensions
  for size, and position. The class also includes a constructor. The display_candle()
@@ -40,12 +42,11 @@ Candle - The candle class includes attributes for the candle, such as color, dim
  and related functionality in the Group_15_assignment5.pde file.
 
 
-
 Unexpected Challenges: 
 
-Getting the candles to rotate on multiple axes was difficult, especially designing
+ Getting the candles to rotate on multiple axes was difficult, especially designing
  them so that they rotate around the central y-axis of the cake.
 
-Another difficulty we encountered was incorporating all of our objects together.
-Especially in a 3D environment, it was challenging to position the objects in a logical
+ Another difficulty we encountered was incorporating all of our objects together.
+ Especially in a 3D environment, it was challenging to position the objects in a logical
  relation to one another, as well as scaling them to look aesthetic and realistic.
