@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-Balloon b1;
-
-void setup(){
-  
-  size(500,500, P3D);
-  b1 = new Balloon(0,0,0,25,10,color(234,23,43));
-  
-=======
 Balloon b1, b2;
 Cake BirthdayCake, bdaycake;
 Candle c1;
@@ -19,7 +10,7 @@ PFont courier;
 
 void setup(){
   
-  size(800, 800, P3D);
+  size(500,500, P3D);
   b1 = new Balloon(0,-100,0,25,10,color(234,23,43));
   b2 = new Balloon(0,-200,0,30,10,color(89,19,188));
   BirthdayCake = new Cake(0, 200, -200, 100, 50, 80, 40);
@@ -34,23 +25,13 @@ void setup(){
  
   courier = createFont("Courier", 60);
   textFont(courier);
->>>>>>> 42856a2435f43ef0f7d2f4f37748ce56634de0ec
 }
 
 void draw(){
   
-<<<<<<< HEAD
   background(250,242,249);
-  camera(0,0,300,0,0,0,0,1,0);
-  b1.display();
-  b1.move(0.5,-0.5,0);
-  //b1.shake_string();
   
-  b1.rotate();
-=======
-  background(#C5E0DC);
-  
-  if (frame_num < 180){
+  if (frame_num < 220){
     camera(0,0,300,0,0,0,0,1,0);
     text("Happy",-100,-80);
     text("Birthday!",-150,-20);
@@ -76,8 +57,9 @@ void draw(){
   c1.display_candle();
   c2.display_candle();
   c3.display_candle();
+  }
   
-  } else {
+  else{
     frame_num = 0;
     
     b1 = new Balloon(0,-100,0,25,10,color(234,23,43));
@@ -92,5 +74,4 @@ void draw(){
   }
   
   frame_num += 1;
->>>>>>> 42856a2435f43ef0f7d2f4f37748ce56634de0ec
 }

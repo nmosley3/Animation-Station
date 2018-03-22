@@ -1,0 +1,52 @@
+Intended Animation: 
+
+ Our intention was to animate a birthday scene with candles, birthday cake and balloons,
+ title “Birthday Celebration”. The animation is about 15 seconds and loops through the 
+ sequence continuously. 
+
+
+Included Classes:
+
+Group_15_assignment5 -  This file serves as the main function for our animation, in which
+ instantiations of each class is created and displayed. We create the objects at the global
+ and setup() levels, and call the object methods (such as display and movement) in the
+ draw() function. 
+
+Balloon - The balloon class includes attributes and a constructor to create my balloon
+ pshape. We had a few more attributes than expected, such as the PShape attributes, and
+ a few counters to control the rotation. We have a display method that displays the full
+ shape, the balloon -- which includes the string and the sphere of the balloon. We have
+ a move function, which moves the balloon across the scene. We have a shake_string method
+ that wiggles the string back and forth but doesn’t affect the actual sphere. And finally,
+ we have a rotate function which rotates the balloon to simulate the balloon floating up
+ and rotating more realistically. Maddie Pellman worked on the Balloon class and the
+ related functionality in the Group_15_assignment5.pde file. 
+		 	 	 		
+Cake - The cake class creates a two tiered take, with a curvy drawn horizontally along
+ the center of each tier. The cake tiers are made with multiple PShapes drawn from that
+ essentially construct cylinders, and are then added to a parent BirthdayCake group
+ PShape. The curved lines that decorate the cake were simply created by placing vertices
+ along an oscillating sinusoidal curve, and made smooth by being given a thick stroke
+ weight. The display() function simply translates the cake to the specified x, y, and z
+ positions given by the user as arguments in the function and displays the outermost
+ PShape group. The spin() function rotates the lower tier of the cake clockwise on its
+ y-axis, and the upper tier counter-clockwise. The two tiers was primarily designed to 
+ allow for two seperate rotations. Nathan Mosley designed and implemented the cake class.
+
+Candle - The candle class includes attributes for the candle, such as color, dimensions
+ for size, and position. The class also includes a constructor. The display_candle()
+ method displays the candle - the main body as well as the candle flame. The candle
+ flame is created such that it constantly spins (sub-animation) to create a flickering
+ effect, meanwhile the candle as a whole (candle body and flame) move in a circle around
+ the y-axis of the center of the cake. Rakshana Govindarajan worked on the Candle class
+ and related functionality in the Group_15_assignment5.pde file.
+
+
+Unexpected Challenges: 
+
+ Getting the candles to rotate on multiple axes was difficult, especially designing
+ them so that they rotate around the central y-axis of the cake.
+
+ Another difficulty we encountered was incorporating all of our objects together.
+ Especially in a 3D environment, it was challenging to position the objects in a logical
+ relation to one another, as well as scaling them to look aesthetic and realistic.
