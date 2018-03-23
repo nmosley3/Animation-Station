@@ -2,8 +2,9 @@ class Trapeze{
   
   //float space = 5;
   float current_x, current_y;
-  //float ending_x, ending_y;
+  float ending_x, ending_y;
   float resting_x, resting_y;
+  
   //float len_rope;
   //float resting_x, resting_y;
   float vx, vy; //x and y axis velocities
@@ -21,7 +22,15 @@ class Trapeze{
     this.resting_y = resting_y;
     //this.ending_x = ending_x;
     //this.ending_y = ending_y;
+    //Here just set current position to resting x and resting y
+    //because at the beginning we don't want any forces applied!!!
     
+  }
+  
+  void move(float newx, float newy) {
+    
+    current_x = newx;
+    current_y = newy;
   }
   
   void applyForce(){
@@ -43,7 +52,7 @@ class Trapeze{
     stroke(90,69,69);
     strokeWeight(3);
     line(current_x, current_y, x, y);
-     
+    
   }
   
   
