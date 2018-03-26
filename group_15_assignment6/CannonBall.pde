@@ -1,7 +1,7 @@
 // Assigning value for gravity force
 float g = 0.06;
 // Assigning value for acceleration
-float a = 0.02;
+float f = 0.990;
 
 class CannonBall {
   // Attributes: color, x and y coorinates, velocity force for x, velocity force for y
@@ -40,8 +40,8 @@ class CannonBall {
     // Applying velocity
     this.x += this.vx;
     this.y -= this.vy;
-    // Applying acceleration
-    this.vy -= a;
+    // Applying air resistance (friction) that slows down movement
+    this.vy = this.vy * f;
     // Applying gravity
     this.vy -= g;
     
