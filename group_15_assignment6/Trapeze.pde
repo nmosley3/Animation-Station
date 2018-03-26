@@ -2,8 +2,8 @@ class Trapeze{
   
   //float space = 5;
   float current_x, current_y;
-  float ending_x, ending_y;
   float resting_x, resting_y;
+  float starting_x, starting_y;
   
   //float len_rope;
   //float resting_x, resting_y;
@@ -20,6 +20,10 @@ class Trapeze{
     this.current_y = starting_y;
     this.resting_x = resting_x;
     this.resting_y = resting_y;
+    
+    this.starting_x = starting_x;
+    this.starting_y = starting_y;
+    
     //this.ending_x = ending_x;
     //this.ending_y = ending_y;
     //Here just set current position to resting x and resting y
@@ -53,6 +57,11 @@ class Trapeze{
     strokeWeight(3);
     line(current_x, current_y, x, y);
     
+  }
+  
+  void reset() {
+    this.current_x = starting_x; 
+    this.current_y = starting_y;
   }
   
   
