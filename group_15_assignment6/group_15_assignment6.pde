@@ -1,5 +1,6 @@
 Trapeze t1,t2,t3; 
 PImage person;
+PImage background;
 
 int frame_count = 0;
 
@@ -18,10 +19,14 @@ void setup(){
   
   
   size(600,600);
+  
+  background = loadImage("CircusBackground.jpg");
+  background.resize(width, height);
+  
   t1 = new Trapeze(40,60,100,84.8);
   t2 = new Trapeze(60,40,100,56.52);
   t3 = new Trapeze(80,20,100,28.26);
-  person = loadImage("Trapeze Person.jpg");
+  person = loadImage("Trapeze Person.png");
   person.resize(40,80);
   
   allFireworks = new Firework[10];
@@ -39,6 +44,8 @@ void setup(){
 void draw(){
   
   background(255);
+  
+  image(background, 0, 0);
   
   t1.display(t2.current_x,t2.current_y);
   t2.display(t3.current_x,t3.current_y);
@@ -66,7 +73,7 @@ void draw(){
     }
   }
   
-  if (frame_count > 250) {
+  if (frame_count > 175) {
     t1.reset();
     t2.reset();
     t3.reset();
