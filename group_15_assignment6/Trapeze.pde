@@ -1,4 +1,4 @@
-class Trapeze{
+class Trapeze {
   
   //float space = 5;
   float current_x, current_y;
@@ -14,7 +14,7 @@ class Trapeze{
   //float accel = 0.03;
   
   
-  Trapeze(float starting_x, float starting_y, float resting_x, float resting_y){
+  Trapeze(float starting_x, float starting_y, float resting_x, float resting_y) {
     
     this.current_x = starting_x;
     this.current_y = starting_y;
@@ -27,12 +27,10 @@ class Trapeze{
     //this.ending_x = ending_x;
     //this.ending_y = ending_y;
     //Here just set current position to resting x and resting y
-    //because at the beginning we don't want any forces applied!!!
-    
+    //because at the beginning we don't want any forces applied!!! 
   }
   
-  void move(float newx, float newy) {
-    
+  void move(float newx, float newy) {  
     current_x = newx;
     current_y = newy;
   }
@@ -55,14 +53,11 @@ class Trapeze{
   void display(float x, float y){
     stroke(90,69,69);
     strokeWeight(3);
-    line(current_x, current_y, x, y);
-    
+    line(current_x, current_y, x, y); 
   }
   
   void reset() {
     this.current_x = starting_x; 
     this.current_y = starting_y;
-  }
-  
-  
+  } 
 }

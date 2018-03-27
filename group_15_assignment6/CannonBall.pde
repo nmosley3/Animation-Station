@@ -31,7 +31,6 @@ class CannonBall {
     stroke(0);
     fill(this.c);
     ellipse(this.x, this.y, 30, 30);
-
   }
   
   // Cannonball launches from cannon and moves through ring of fire
@@ -49,10 +48,8 @@ class CannonBall {
     if (this.x >= 500) {
       this.c = color(random(0,255),int(random(0,255)),int(random(0,255)));
       //c2 = new CannonBall(color(56,240,223),125,490,4,4);      
-      //c2.display();
-    
+      //c2.display();  
     }
-    
   }
   
   void reset() {
@@ -64,6 +61,3 @@ class CannonBall {
   }
   
 }
-
-  
-    

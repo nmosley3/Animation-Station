@@ -16,7 +16,6 @@ PShape particle;
     this.x += vx;
     this.y += vy;
     this.vy += gravity;
-    
   }
   
   void display() {
@@ -26,5 +25,4 @@ PShape particle;
     shape(particle);
     popMatrix();
   }
-  
 }
