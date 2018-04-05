@@ -1,8 +1,14 @@
+import java.util.Random;
+
 class Coin{
   
   PImage[] images; 
   int imageCount;
   int frame = 0;
+  int lane;
+  int current_quad = 1;
+  Random rand;
+  //int[] quad_array = new int[]{1,2,3,4};
   
   float current_x = 100;
   float current_y = 100;
@@ -26,7 +32,7 @@ class Coin{
        //use nf for image count
        String filename = object + nf(i+1,2) + ".png";
        images[i] = loadImage(filename);
-       images[i].resize(20,20);
+       images[i].resize(25,25);
      }
        
   }
@@ -44,6 +50,37 @@ class Coin{
   
   void move(){
     
+    int new_quad = current_quad;
+    while (new_quad == current_quad){
+      
+      //get random int
+      new_quad = 1 + rand.nextInt(4);
+    }
+   
+     if (new_quad == 1) {
+       lane = rand.nextInt(5) + 1;
+       current_y= ((lane-1)*35) + 5;
+       current_x = rand.nextInt(200) + 50;        
+     }
+     else if (new_quad == 2){
+       lane = rand.nextInt(5) + 1;
+       current_y= ((lane-1)*35) + 5;
+       current_x = rand.nextInt(200) + 350; 
+       
+     }
+     else if (new_quad == 3){
+       lane = rand.nextInt(5) + 6;
+       current_y= ((lane-1)*35) + 5;
+       current_x = rand.nextInt(200) + 50; 
+       
+     }
+     else{
+       lane = rand.nextInt(5) + 6;
+       current_y= ((lane-1)*35) + 5;
+       current_x = rand.nextInt(200) + 350; 
+     }
+     
+     current_quad = new_quad;
     //pass it what quadrant it is in and calculate random variables based on that
   }
 }
