@@ -1,5 +1,6 @@
 Coin c1; 
 Shark s1;
+Swimmer player;
 
 void setup(){
   
@@ -8,6 +9,7 @@ void setup(){
   //initialize coin
   c1 = new Coin("coin",6);
   s1 = new Shark(5);
+  player = new Swimmer();
   
 }
 
@@ -17,6 +19,8 @@ void draw(){
   c1.display();
   s1.display();
   s1.move();
+  
+  player.display();
   
   if (frameCount > 90){
     s1.increase_speed();
@@ -37,6 +41,10 @@ void display_background(){
   rect(0,350, 280, 30);
   rect(320,350,280,30);
   
+} 
+
+void keyPressed(){
+  player.keyPressed();
 }
 
 

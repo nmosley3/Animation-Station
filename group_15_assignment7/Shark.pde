@@ -16,7 +16,7 @@ class Shark{
     if (lane % 2 == 0){
       img = loadImage("shark.png");
       current_x = 600;
-      print("here");
+      //print("here");
     }
     else{
       img = loadImage("shark2.png");
@@ -31,7 +31,7 @@ class Shark{
   void display(){
     
     image(img,current_x,current_y);
-    print(current_x);
+    //print(current_x);
   }
   
   void move(){
