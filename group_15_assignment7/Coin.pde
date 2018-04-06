@@ -13,6 +13,11 @@ class Coin{
   float current_x = 100;
   float current_y = 100;
   
+  float previous_x = 100;
+  float previous_y = 100;
+  
+  int coinWidth, coinHeight;
+  
   //values for timer 
   int animationTimer = 0;
   int speed = 67;
@@ -20,19 +25,21 @@ class Coin{
  
   Coin(String object, int count){
     
+     coinWidth = 25;
+     coinHeight = 25;
     
      this.imageCount = count;
+     
      //create array with size of number of frames
      images = new PImage[imageCount];
      
      //go through for loop and create files and add 
      //to array 
      for (int i = 0; i<imageCount; i++){
-       
        //use nf for image count
        String filename = object + nf(i+1,2) + ".png";
        images[i] = loadImage(filename);
-       images[i].resize(25,25);
+       images[i].resize(coinWidth, coinHeight);
      }
        
   }
@@ -83,4 +90,16 @@ class Coin{
      current_quad = new_quad;
     //pass it what quadrant it is in and calculate random variables based on that
   }
+  
+  // Maddie: write code for moving the coin here
+  // When you're done, try moving the swimmer over the coin to see if it works
+  void moveCoin() {
+    // I just need these two lines of code
+    previous_x = current_x;
+    previous_y = current_y;
+    
+
+    
+  }
+  
 }

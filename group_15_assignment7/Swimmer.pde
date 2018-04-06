@@ -83,6 +83,8 @@ class Swimmer {
     this.y = startingY;
     newX = this.x;
     newY = this.y;
+    
+    this.score = 0;
   }
   
   void collectCoin() {

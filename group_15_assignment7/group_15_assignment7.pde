@@ -8,11 +8,17 @@ float currentTile = 0;
 void setup(){
   
   size(600,400);
-  //frameRate(1);
+  
   //initialize coin
   c1 = new Coin("coin",6);
+  
+  //initialize sharks
   s1 = new Shark(5);
+  
+  //inialize player
   player = new Swimmer();
+  
+  
   screenOwnership = new int[height][width];
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j ++) {
@@ -20,29 +26,34 @@ void setup(){
     }
   }
   
+  coinUpdateScreenOwnership();
+
+  
 }
 
 void draw(){
-  if (keyPressed) {
-      player.keyPressed();
-    }
-    
-  updateScreenOwnership();
-  checkForCollision();
-      
-  //print ("Shark position: ", s1.current_x, ", ", s1.current_y, "/n");
-  //print ("Player position: ", player.x, ", ", player.y, "/n");
-   
+  
   display_background();
+  
   c1.display();
+  
   s1.display();
   s1.move();
   
   player.display();
+  print(player.score);
+  
+   if (keyPressed) {
+      player.keyPressed();
+    }
+      
+  sharkUpdateScreenOwnership();
+  checkForCollision();
   
   if (frameCount > 90 && frameCount < 180) {
     s1.increase_speed();
   }
+  
 }
 
 
@@ -51,7 +62,7 @@ void display_background(){
   background(125, 213, 234);
   
   //these two rectangles display the background scene
-  fill(77, 74, 69);
+  fill(#F4A460);
   noStroke();
   //this rect is where the score/timer will be displayed 
   rect(0, 380, 600, 20);
@@ -61,56 +72,75 @@ void display_background(){
   
 } 
 
-void updateScreenOwnership() {
+void sharkUpdateScreenOwnership() {
+  
+  // reset previous shark hitbox to 0
   if (s1.previous_x > 0 && s1.previous_x < width) {
-  screenOwnership[int(s1.previous_y)][int(s1.previous_x)] = 0;
-  screenOwnership[int(s1.previous_y + s1.img.height)][int(s1.previous_x)] = 0;
+    screenOwnership[int(s1.previous_y)][int(s1.previous_x)] = 0;
+    screenOwnership[int(s1.previous_y + s1.img.height)][int(s1.previous_x)] = 0;
   }
   
   if (s1.previous_x + s1.img.width < width && s1.previous_x + s1.img.width > 0) {
-  screenOwnership[int(s1.previous_y)][int(s1.previous_x + s1.img.width)] = 0;
-  screenOwnership[int(s1.previous_y + s1.img.height)][int(s1.previous_x + s1.img.width)] = 0;
+    screenOwnership[int(s1.previous_y)][int(s1.previous_x + s1.img.width)] = 0;
+    screenOwnership[int(s1.previous_y + s1.img.height)][int(s1.previous_x + s1.img.width)] = 0;
   }
   
+  // set current shark's hitbox to 1
   if (s1.current_x > 0) {
-  screenOwnership[int(s1.current_y)][int(s1.current_x)] = 1;
-  screenOwnership[int(s1.current_y + s1.img.height)][int(s1.current_x)] = 1;
+    screenOwnership[int(s1.current_y)][int(s1.current_x)] = 1;
+    screenOwnership[int(s1.current_y + s1.img.height)][int(s1.current_x)] = 1;
   }
   if (s1.current_x + s1.img.width < width) {
-  screenOwnership[int(s1.current_y)][int(s1.current_x + s1.img.width)] = 1;
-  screenOwnership[int(s1.current_y + s1.img.height)][int(s1.current_x + s1.img.width)] = 1;
+    screenOwnership[int(s1.current_y)][int(s1.current_x + s1.img.width)] = 1;
+    screenOwnership[int(s1.current_y + s1.img.height)][int(s1.current_x + s1.img.width)] = 1;
   }
-  if (frameCount == 2) {
-  for (int i= 0; i< height; i ++) {
-    for (int j = 0; j < width; j++) {
-      if (screenOwnership[i][j] == 1) {
-        print (j, i);
-        println();
-      }
-    }
-  }
-  }
+  
 }
 
 void checkForCollision() {
+  
+  // for each pixel the player covers, check if it is occupied by a hitbox
   for (int i = int (player.y) - player.currentSwimmer.height / 2; i < int (player.y) +player.currentSwimmer.height / 2; i++) {
     for (int j = int(player.x) - player.currentSwimmer.width / 2; j < int(player.x) + player.currentSwimmer.width / 2; j ++) {
       currentTile = screenOwnership[i][j];
-      if (i == 145 && j == 2) {
-        print(currentTile);
-      }
+      
+      // player intersects with a shark (1)
       if (currentTile == 1) {
         player.lose();
+      
+      // player intersects with a coin (2)
       } else if (currentTile == 2) {
         player.collectCoin();
-        // c1.moveCoin();
+        c1.moveCoin();
+        coinUpdateScreenOwnership();
+        
+      // player intersects with a westbound ship (3)
       } else if (currentTile == 3) {
         player.onBoatGoingLeft();
+        
+      // player intersects with a eastbound ship (4)
       } else if (currentTile == 4) {
         player.onBoatGoingRight(); 
       }
     }
   }
+  
+}
+
+void coinUpdateScreenOwnership() {
+  
+  // set the old coins hitbox to 0
+  screenOwnership[int(c1.previous_y)][int(c1.previous_x)] = 0;
+  screenOwnership[int(c1.previous_y + c1.coinHeight)][int(c1.previous_x)] = 0;
+  screenOwnership[int(c1.previous_y)][int(c1.previous_x + c1.coinWidth)] = 0;
+  screenOwnership[int(c1.previous_y + c1.coinHeight)][int(c1.previous_x + c1.coinWidth)] = 0;
+  
+  // set the new coin's hitbox to 2
+  screenOwnership[int(c1.current_y)][int(c1.current_x)] = 2;
+  screenOwnership[int(c1.current_y + c1.coinHeight)][int(c1.current_x)] = 2;
+  screenOwnership[int(c1.current_y)][int(c1.current_x + c1.coinWidth)] = 2;
+  screenOwnership[int(c1.current_y + c1.coinHeight)][int(c1.current_x + c1.coinWidth)] = 2;
+  
 }
 
 
