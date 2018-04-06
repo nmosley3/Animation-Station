@@ -8,35 +8,47 @@ class Shark{
   //this is an array that holds the speeds for each lane
   float[] speeds = new float[]{1,-2,0.5,-1.8,2.1,-0.9,0.3,-1.2,1.9,-1.6};
   
+  float speed;
+  //float lastSpeed;
+  float previous_x, previous_y;
+  
   Shark(int lane){
     
     this.lane = lane;
+    this.speed = speeds[lane - 1];
+    //this.lastSpeed = speed;
     
     //determine which side to start the shark on
     if (lane % 2 == 0){
       img = loadImage("shark.png");
-      current_x = 600;
+      this.current_x = 600;
       //print("here");
-    }
-    else{
+    } else {
       img = loadImage("shark2.png");
-      current_x = 0;
+      this.current_x = 0;
     }
     
     img.resize(50,25);
-    current_y = ((lane-1)*35)+5;
+    this.current_y = ((lane-1)*35)+5;
     
   }
   
   void display(){
     
-    image(img,current_x,current_y);
-    //print(current_x);
+    image(img,this.current_x, this.current_y);
   }
   
   void move(){
     
-    current_x = current_x + (speeds[lane-1]*multiplier);
+    this.previous_x = this.current_x;
+    this.previous_y = this.current_y;
+    //this.lastSpeed = speed;
+    this.speed = (speeds[lane-1]*multiplier);
+    this.current_x = this.current_x + this.speed;
+    
+    if (this.current_x > width) {
+      this.current_x = -img.width;
+    }
     
   }
   
@@ -45,4 +57,7 @@ class Shark{
     multiplier += 0.02;
     
   }
+  
+
+  
 }

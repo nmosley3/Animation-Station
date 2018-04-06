@@ -1,9 +1,12 @@
 class Swimmer {
   float x, y, startingX, startingY;
   float speed;
-  PImage swimmingManLeft, swimmingManUp, swimmingManRight, swimmingManDown;
+  PImage currentSwimmer, swimmingManLeft, swimmingManUp, swimmingManRight, swimmingManDown;
   int direction;
   PImage[] swimmingManDirections;
+  int [][] hitBox;
+  int score;
+  float newX, newY;
   
   
   Swimmer() {
@@ -11,13 +14,20 @@ class Swimmer {
     this.startingY = 330;
     this.x = 290;
     this.y = 330;
-    this.speed = 10;
+    this.speed = 5;
+    this.score = 0;
+    
+    newX = this.x;
+    newY = this.y;
+    
+    hitBox = new int [4][2];
     
     // load the images of the swimmer for each direction
     this.swimmingManLeft = loadImage("swimmingManLeft.png");
     this.swimmingManUp = loadImage("swimmingManUp.png");
     this.swimmingManRight = loadImage("swimmingManRight.png");
     this.swimmingManDown = loadImage("swimmingManDown.png");
+    this.currentSwimmer = this.swimmingManUp;
     
     // sort them into a list, starting with the left direction and going clockwise
     this.direction = 1;  
@@ -37,28 +47,58 @@ class Swimmer {
   // check if any of the directional arrows are pressed
   // move the swimmer in that direction and change the image accordingly
   void keyPressed() {
-    print ("SWIMMER KEY PRESSED");
     if (key == CODED); {
       if (keyCode == LEFT) {
-        print ("LEFT");
-        this.x -= this.speed;
+        newX -= this.speed;
         direction = 0;
       } else if (keyCode == RIGHT) {
-        this.x += this.speed;
+        newX += this.speed;
         direction = 2;
       } else if (keyCode == UP) {
-        this.y -= this.speed;
+        newY -= this.speed;
         direction = 1;
       } else if (keyCode == DOWN) {
-        this.y += this.speed;
+        newY += this.speed;
         direction = 3;
       }
-    }
+      if (newX - this.currentSwimmer.width / 2 > 0 && newX + this.currentSwimmer.width / 2 < width) {
+        this.x = newX;
+      }
+      if (newY - this.currentSwimmer.height / 2> 0 && newY + this.currentSwimmer.height/ 2 < height) {
+        this.y = newY;
+      }  
   }
+  }
+  
   
   // display the swimmer according to its current direction
   void display() {
-    image(swimmingManDirections[direction], this.x, this.y);   
+    this.currentSwimmer = swimmingManDirections[direction];
+    image(this.currentSwimmer, this.x - this.currentSwimmer.width / 2, this.y - this.currentSwimmer.height / 2); 
   }
+  
+  
+  void lose() {
+    this.x = startingX;
+    this.y = startingY;
+    newX = this.x;
+    newY = this.y;
+  }
+  
+  void collectCoin() {
+    this.score += 1; 
+  }
+  
+  
+  void onBoatGoingLeft () {
+     
+    
+  }
+  
+  void onBoatGoingRight () {
+    
+    
+  }
+  
   
 }
