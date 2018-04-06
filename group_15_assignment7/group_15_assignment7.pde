@@ -41,7 +41,6 @@ void draw(){
   s1.move();
   
   player.display();
-  print(player.score);
   
    if (keyPressed) {
       player.keyPressed();
