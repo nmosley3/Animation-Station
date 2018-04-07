@@ -7,6 +7,7 @@ class Swimmer {
   int [][] hitBox;
   int score;
   float newX, newY;
+
   
   
   Swimmer() {
@@ -14,7 +15,7 @@ class Swimmer {
     this.startingY = 330;
     this.x = 290;
     this.y = 330;
-    this.speed = 5;
+    this.speed = 4;
     this.score = 0;
     
     newX = this.x;
@@ -64,7 +65,7 @@ class Swimmer {
       if (newX - this.currentSwimmer.width / 2 > 0 && newX + this.currentSwimmer.width / 2 < width) {
         this.x = newX;
       }
-      if (newY - this.currentSwimmer.height / 2> 0 && newY + this.currentSwimmer.height/ 2 < height) {
+      if (newY - this.currentSwimmer.height / 2> 0 && newY + this.currentSwimmer.height/ 2 < 350) {
         this.y = newY;
       }  
   }
@@ -89,6 +90,7 @@ class Swimmer {
   
   void collectCoin() {
     this.score += 1; 
+    
   }
   
   

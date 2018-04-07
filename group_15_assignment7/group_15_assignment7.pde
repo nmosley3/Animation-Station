@@ -1,6 +1,7 @@
 Coin c1; 
-Shark s1;
+Shark s1,s2;
 Swimmer player;
+ArrayList<Lifes> livesleft = new ArrayList<Lifes>();
 int lastKey;
 int [][] screenOwnership;
 float currentTile = 0;
@@ -14,10 +15,14 @@ void setup(){
   
   //initialize sharks
   s1 = new Shark(5);
+  s2 = new Shark(2);
   
   //inialize player
   player = new Swimmer();
   
+  livesleft.add(new Lifes(10,353));
+  livesleft.add(new Lifes(30,353));
+
   
   screenOwnership = new int[height][width];
   for (int i = 0; i < height; i++) {
@@ -35,10 +40,17 @@ void draw(){
   
   display_background();
   
+  for (Lifes live : livesleft){
+    live.display();
+  }
+  
+  
   c1.display();
   
   s1.display();
+  s2.display();
   s1.move();
+  s2.move();
   
   player.display();
   
@@ -49,10 +61,8 @@ void draw(){
   sharkUpdateScreenOwnership();
   checkForCollision();
   
-  if (frameCount > 90 && frameCount < 180) {
-    s1.increase_speed();
-  }
   
+
 }
 
 
@@ -105,13 +115,27 @@ void checkForCollision() {
       
       // player intersects with a shark (1)
       if (currentTile == 1) {
+        
+        if (livesleft.size()>0){
+        livesleft.remove(livesleft.size()-1);
         player.lose();
+        }
+        else{
+          
+          //When gameover() function is in place, we don't need 
+          //player.lose() function, Rakshana: this is where the call to the buttons
+          //could go...?
+          player.lose();
+          gameover();
+        }
       
       // player intersects with a coin (2)
       } else if (currentTile == 2) {
         player.collectCoin();
         c1.moveCoin();
         coinUpdateScreenOwnership();
+        s1.increase_speed();
+        s2.increase_speed();
         
       // player intersects with a westbound ship (3)
       } else if (currentTile == 3) {
@@ -142,7 +166,8 @@ void coinUpdateScreenOwnership() {
   
 }
 
-
+void gameover(){
+}
 
 
 //Each lane is going to be 35 pixels in height -- so there will be 10 lanes 
