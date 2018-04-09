@@ -1,6 +1,6 @@
 Coin c1; 
-Shark s1,s2;
-Sailboat sb1, sb2;
+Shark s1,s2,s3;
+Sailboat sb1, sb2, sb3;
 Swimmer player;
 Button startOver;
 
@@ -19,10 +19,13 @@ void setup(){
   //initialize sharks
   s1 = new Shark(5);
   s2 = new Shark(2);
+  s3 = new Shark(7);
   
   // initialize sailboats
   sb1 = new Sailboat(9);
   sb2 = new Sailboat(6);
+  sb3 = new Sailboat(3);
+  
   
   startOver = new Button(170,100,200,color(159,69,196),"Start Over");
   
@@ -58,13 +61,16 @@ void draw(){
   
   s1.display();
   s2.display();
+  s3.display();
   s1.move();
   s2.move();
+  s3.move();
   sb1.display();
   sb1.move();
   sb2.display();
   sb2.move();
-  
+  sb3.display();
+  sb3.move();
   
   player.display();
   

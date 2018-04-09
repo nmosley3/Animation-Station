@@ -6,7 +6,7 @@ class Shark{
   float current_y;
   float multiplier = 1.0;
   //this is an array that holds the speeds for each lane
-  float[] speeds = new float[]{1,-2,0.5,-1.8,2.1,-0.9,0.3,-1.2,1.9,-1.6};
+  float[] speeds = new float[]{1,-2,0.5,-1.8,2.1,-0.9,0.7,-1.2,1.9,-1.6};
   
   float speed;
   //float lastSpeed;
