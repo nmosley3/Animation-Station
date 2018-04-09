@@ -46,8 +46,12 @@ class Shark{
     this.speed = (speeds[lane-1]*multiplier);
     this.current_x = this.current_x + this.speed;
     
-    if (this.current_x > width) {
+    if ((lane%2!=0) && (this.current_x > width)) {
       this.current_x = -img.width;
+    }
+    
+    if ((lane%2==0) && (this.current_x < (0-img.width))){
+      this.current_x = width;
     }
     
   }
