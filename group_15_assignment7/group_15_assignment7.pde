@@ -81,6 +81,12 @@ void draw(){
   sharkUpdateScreenOwnership();
   checkForCollision();
   
+  if (player.num_coins == 4){
+    
+    
+    
+  }
+  
   
 
 }
@@ -149,6 +155,8 @@ void checkForCollision() {
           gameover();
           // Displays score and reset button
           // "Game Over" banner is disappearing though ***
+          
+          
           strokeWeight(3);
           stroke(0);
           fill(color(159,69,196));
@@ -167,6 +175,8 @@ void checkForCollision() {
           
             }
           }
+          
+          
           // FOR WHEN THE PLAYER WINS AND WANTS TO RESTART
           /*
           strokeWeight(3);
@@ -231,6 +241,7 @@ void coinUpdateScreenOwnership() {
 }
 
 void gameover(){
+  
 }
 
 

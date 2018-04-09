@@ -6,6 +6,7 @@ class Swimmer {
   PImage[] swimmingManDirections;
   int [][] hitBox;
   int score;
+  int num_coins;
   float newX, newY;
 
   
@@ -17,6 +18,7 @@ class Swimmer {
     this.y = 330;
     this.speed = 4;
     this.score = 0;
+    this.num_coins = 0;
     
     newX = this.x;
     newY = this.y;
@@ -85,11 +87,13 @@ class Swimmer {
     newX = this.x;
     newY = this.y;
     
-    this.score = 0;
+    score = score - 50;
   }
   
   void collectCoin() {
-    this.score += 1; 
+    this.score += 100; 
+    this.num_coins += 1;
+   
     
   }
   
