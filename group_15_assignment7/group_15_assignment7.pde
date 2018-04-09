@@ -1,6 +1,9 @@
 Coin c1; 
 Shark s1,s2;
+Sailboat sb1, sb2;
 Swimmer player;
+Button startOver;
+
 ArrayList<Lifes> livesleft = new ArrayList<Lifes>();
 int lastKey;
 int [][] screenOwnership;
@@ -16,6 +19,12 @@ void setup(){
   //initialize sharks
   s1 = new Shark(5);
   s2 = new Shark(2);
+  
+  // initialize sailboats
+  sb1 = new Sailboat(9);
+  sb2 = new Sailboat(6);
+  
+  startOver = new Button(170,100,200,color(159,69,196),"Start Over");
   
   //inialize player
   player = new Swimmer();
@@ -51,6 +60,11 @@ void draw(){
   s2.display();
   s1.move();
   s2.move();
+  sb1.display();
+  sb1.move();
+  sb2.display();
+  sb2.move();
+  
   
   player.display();
   
@@ -127,6 +141,50 @@ void checkForCollision() {
           //could go...?
           player.lose();
           gameover();
+          // Displays score and reset button
+          // "Game Over" banner is disappearing though ***
+          strokeWeight(3);
+          stroke(0);
+          fill(color(159,69,196));
+          rect(170,100,200,100);
+          fill(color(255));
+          textSize(15);
+          text("Game over!" + "\n" + "Score: ",235,130);
+          fill(0);
+          // Displays button
+          startOver.display();
+          if (mousePressed) {
+            if(mouseX > startOver.x && mouseX < (startOver.x + startOver.w + 50) && mouseY > startOver.y && mouseY < startOver.y + startOver.w) {
+              // Takes you back to initial screen to begin game again
+              // NEED ACTION HERE TO START OVER GAME
+              println("Hooray");
+          
+            }
+          }
+          // FOR WHEN THE PLAYER WINS AND WANTS TO RESTART
+          /*
+          strokeWeight(3);
+          stroke(0);
+          fill(color(159,69,196));
+          rect(170,100,200,100);
+          fill(color(255));
+          textSize(15);
+          text("You won!" + "\n" + "Score: ",235,130);
+          fill(0);
+          // Displays button
+          startOver.display();
+          if (mousePressed) {
+            if(mouseX > startOver.x && mouseX < (startOver.x + startOver.w + 50) && mouseY > startOver.y && mouseY < startOver.y + startOver.w) {
+              // Takes you back to initial screen to begin game again
+              // NEED ACTION HERE TO START OVER GAME
+              println("Hooray");
+          
+            }
+          }
+          */
+
+          
+          
         }
       
       // player intersects with a coin (2)
