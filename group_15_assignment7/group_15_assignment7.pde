@@ -87,6 +87,9 @@ void draw(){
     live.display();
   }
   
+  textSize(30);
+  fill(0);
+  text("Score:" + player.score, 400, 382);
   
   c1.display();
   
