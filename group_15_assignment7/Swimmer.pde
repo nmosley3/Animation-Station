@@ -12,10 +12,10 @@ class Swimmer {
   
   
   Swimmer() {
-    this.startingX = 290;
-    this.startingY = 330;
-    this.x = 290;
-    this.y = 330;
+    this.startingX = 300;
+    this.startingY = 350;
+    this.x = 300;
+    this.y = 350;
     this.speed = 4;
     this.score = 0;
     this.num_coins = 0;
@@ -77,7 +77,13 @@ class Swimmer {
   // display the swimmer according to its current direction
   void display() {
     this.currentSwimmer = swimmingManDirections[direction];
-    image(this.currentSwimmer, this.x - this.currentSwimmer.width / 2, this.y - this.currentSwimmer.height / 2); 
+    if (this.x <= 0) {
+      this.x = this.currentSwimmer.width;
+    } else if (this.x + this.currentSwimmer.width / 2 >= width - 1) {
+      this.x = width - this.currentSwimmer.width;
+    }
+    image(this.currentSwimmer, this.x - this.currentSwimmer.width / 2, this.y - this.currentSwimmer.height / 2);
+    
   }
   
   
@@ -86,26 +92,31 @@ class Swimmer {
     this.y = startingY;
     newX = this.x;
     newY = this.y;
-    
-    score = score - 50;
+    if (score > 0) {
+      score = score - 50;
+    }
   }
+  
   
   void collectCoin() {
     this.score += 100; 
     this.num_coins += 1;
-   
-    
   }
   
   
   void onBoatGoingLeft () {
-     
-    
+    this.newX -= 2;
+    if (newX - this.currentSwimmer.width / 2 > 0 && newX + this.currentSwimmer.width / 2 < width) {
+        this.x = newX;
+      }
   }
   
+  
   void onBoatGoingRight () {
-    
-    
+    this.newX += 2;
+    if (newX - this.currentSwimmer.width / 2 > 0 && newX + this.currentSwimmer.width / 2 < width) {
+        this.x = newX;
+      } 
   }
   
   

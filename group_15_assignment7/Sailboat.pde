@@ -1,4 +1,4 @@
-class Sailboat{
+class Sailboat {
   
   PImage img;
   int lane; 
@@ -15,14 +15,16 @@ class Sailboat{
   Sailboat(int lane){
     
     this.lane = lane;
-    this.speed = speeds[lane - 1];
-    //this.lastSpeed = speed;
+    if (lane % 2 == 0) {
+      this.speed = -2; 
+    } else {
+      this.speed = 2;
+    }
     
     //determine which side to start the sailboat on
     if (lane % 2 == 0){
       img = loadImage("Sailboat.png");
-      this.current_x = 600;
-      //print("here");
+      this.current_x = width - 1;
     } else {
       img = loadImage("Sailboat 2.png");
       this.current_x = 0;
@@ -43,11 +45,15 @@ class Sailboat{
     this.previous_x = this.current_x;
     this.previous_y = this.current_y;
     //this.lastSpeed = speed;
-    this.speed = (speeds[lane-1]*multiplier);
+    this.speed = (speed*multiplier);
     this.current_x = this.current_x + this.speed;
     
-    if (this.current_x > width) {
-      this.current_x = -img.width;
+    if ((lane%2!=0) && (this.current_x >= width)) {
+      this.current_x = 0;
+    }
+    
+    if ((lane%2==0) && (this.current_x <= 0)){
+      this.current_x = width - 1;
     }
     
   }

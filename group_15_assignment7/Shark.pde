@@ -15,7 +15,7 @@ class Shark{
   Shark(int lane){
     
     this.lane = lane;
-    this.speed = speeds[lane - 1];
+    this.speed = (speeds[lane - 1]);
     //this.lastSpeed = speed;
     
     //determine which side to start the shark on
@@ -47,11 +47,11 @@ class Shark{
     this.current_x = this.current_x + this.speed;
     
     if ((lane%2!=0) && (this.current_x > width)) {
-      this.current_x = -img.width;
+      this.current_x = 0;
     }
     
-    if ((lane%2==0) && (this.current_x < (0-img.width))){
-      this.current_x = width;
+    if ((lane%2==0) && (this.current_x < 0)){
+      this.current_x = width - 1;
     }
     
   }
