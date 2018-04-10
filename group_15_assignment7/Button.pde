@@ -21,14 +21,15 @@ class Button {
   
   void display() {
     fill(c);
-    stroke(255);
+    stroke(0);
     strokeWeight(3);
     // Displays button
     rect(x, y, w + 50, w);
     fill(0);
     // Displays text with "Start Over" 
-    textSize(12);
-    text(t,240,185);
+    textSize(15);
+    fill(255);
+    text(t,x + 16 ,y + 30);
   }
 
 }

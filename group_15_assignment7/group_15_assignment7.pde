@@ -7,6 +7,8 @@ Shark[] allSharksLeft, allSharksRight;
 Sailboat[] allBoatsLeft, allBoatsRight;
 Boolean noHit;
 Boolean gameover;
+Boolean paused;
+Boolean victory;
 
 
 ArrayList<Lifes> livesleft = new ArrayList<Lifes>();
@@ -19,6 +21,8 @@ void setup(){
   size(600,400);
   
   gameover = false;
+  paused = false;
+  victory = false;
   
   //initialize coin
   c1 = new Coin("coin",6);
@@ -52,7 +56,7 @@ void setup(){
   allBoatsRight[0] = sb3;
   
   
-  startOver = new Button(170,100,200,color(159,69,196),"Start Over");
+  startOver = new Button(245,220,50,color(159,69,196),"Start Over");
   
   //inialize player
   player = new Swimmer();
@@ -77,7 +81,7 @@ void draw(){
   
   display_background();
   
-  if (gameover == false) {
+  if (gameover == false && paused == false && victory == false) {
   
   for (Lifes live : livesleft){
     live.display();
@@ -108,30 +112,46 @@ void draw(){
   sb3.move();
   
    if (keyPressed) {
+     if (key == char(32)) {
+       pause();
+     }
       player.keyPressed();
     }
       
   sharkUpdateScreenOwnership();
   boatUpdateScreenOwnership();
+  coinUpdateScreenOwnership();
   
   noHit = false;
   checkForCollision();
   
   
-  player.display();
+    player.display();
   
-  // Victory condition
-  if (player.num_coins == 4){
-    
-    
-    
+    // Victory condition
+    if (player.score == 500){
+      victory = true;   
+    }
   }
-  } else {
+  
+  if (gameover) {
     gameover();
-    
+    return;
   }
   
-
+  if (paused) {
+    pause();
+    if (keyCode == ENTER) {
+      paused = false;
+    }
+    return;
+  }
+  
+  if (victory) {
+    victory();
+    return;
+  }
+  
 }
 
 
@@ -154,14 +174,14 @@ void display_background(){
 void checkForCollision() {
   
   // for each pixel the player covers, check if it is occupied by a hitbox
+  if (noHit = true) {
   for (int i = int (player.y) - player.currentSwimmer.height / 2; i < int (player.y) +player.currentSwimmer.height / 2; i++) {
-   if (noHit = true) {
     for (int j = int(player.x) - player.currentSwimmer.width / 2; j < int(player.x) + player.currentSwimmer.width / 2; j ++) {
       currentTile = screenOwnership[i][j];
       
       // player intersects with a shark (1)
       if (currentTile == 1) {
-        noHit = true;
+        noHit = false;
         
         if (livesleft.size() > 0) {
           
@@ -172,32 +192,7 @@ void checkForCollision() {
           player.lose();
           gameover = true;
         }
-          
-          
-          // FOR WHEN THE PLAYER WINS AND WANTS TO RESTART
-          /*
-          strokeWeight(3);
-          stroke(0);
-          fill(color(159,69,196));
-          rect(170,100,200,100);
-          fill(color(255));
-          textSize(15);
-          text("You won!" + "\n" + "Score: ",235,130);
-          fill(0);
-          // Displays button
-          startOver.display();
-          if (mousePressed) {
-            if(mouseX > startOver.x && mouseX < (startOver.x + startOver.w + 50) && mouseY > startOver.y && mouseY < startOver.y + startOver.w) {
-              // Takes you back to initial screen to begin game again
-              // NEED ACTION HERE TO START OVER GAME
-              println("Hooray");
-          
-            }
-          }
-          */
-
-          
-          
+        break;    
       
       // player intersects with a coin (2)
       } else if (currentTile == 2) {
@@ -206,17 +201,23 @@ void checkForCollision() {
         coinUpdateScreenOwnership();
         s1.increase_speed();
         s2.increase_speed();
+        noHit = false;
+        break;
         
       // player intersects with a rightward ship (3)
       } else if (currentTile == 3) {
         player.onBoatGoingRight();
+        noHit = false;
+        break;
         
       // player intersects with a leftward ship (4)
       } else if (currentTile == 4) {
         player.onBoatGoingLeft(); 
+        noHit = false;
+        break;
       }
     }
-   }
+  }
   }
   
 }
@@ -356,13 +357,12 @@ void gameover(){
   strokeWeight(3);
   stroke(0);
   fill(color(159,69,196));
-  rect(170,100,200,100);
+  rect(170,100,260,100);
   fill(color(255));
   textSize(15);
-  text("Game over!" + "\n" + "Score: " + str(player.score), 235, 130);
+  text("Game over!" + "\n" + "Score: " + str(player.score), 260, 140);
   fill(0);
   // Displays button
-  /*
   startOver.display();
   if (mousePressed) {
     if(mouseX > startOver.x && mouseX < (startOver.x + startOver.w + 50) && mouseY > startOver.y && mouseY < startOver.y + startOver.w) {
@@ -371,11 +371,11 @@ void gameover(){
     resetGame();      
     }
   }
-  */
 }
 
 void resetGame() {
   gameover = false;
+  victory = false;
   c1 = new Coin("coin",6);
   player.score = 0;
   player.num_coins = 0;
@@ -383,6 +383,42 @@ void resetGame() {
   livesleft.add(new Lifes(30,353));
   
 }
+
+void victory() {
+  // Displays score and reset button
+  // "Game Over" banner is disappearing though ***
+  strokeWeight(3);
+  stroke(0);
+  fill(color(159,69,196));
+  rect(170,100,260,100);
+  fill(color(255));
+  textSize(15);
+  text("  Congrats! You won!" + "\n" + "           Score: " + str(player.score), 200, 140);
+  fill(0);
+  // Displays button
+  startOver.display();
+  if (mousePressed) {
+    if(mouseX > startOver.x && mouseX < (startOver.x + startOver.w + 50) && mouseY > startOver.y && mouseY < startOver.y + startOver.w) {
+    //Takes you back to initial screen to begin game again
+    //NEED ACTION HERE TO START OVER GAME
+    resetGame();      
+    }
+  }
+}
+
+void pause () {
+  paused = true;
+  strokeWeight(3);
+  stroke(0);
+  fill(color(159,69,196));
+  rect(170,100,260,100);
+  fill(color(255));
+  textSize(15);
+  text("      Game is paused. \n Press Enter to resume.", 215, 140);
+  fill(0);
+}
+
+
 
 
 //Each lane is going to be 35 pixels in height -- so there will be 10 lanes 

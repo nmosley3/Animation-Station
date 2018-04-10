@@ -82,6 +82,11 @@ class Swimmer {
     } else if (this.x + this.currentSwimmer.width / 2 >= width - 1) {
       this.x = width - this.currentSwimmer.width;
     }
+    if (newY - this.currentSwimmer.height / 2 < 0) {
+      newY = this.currentSwimmer.height;
+    } else if (this.y + this.currentSwimmer.height / 2 >= height - 1) {
+      this.y = height = this.currentSwimmer.height;
+    }
     image(this.currentSwimmer, this.x - this.currentSwimmer.width / 2, this.y - this.currentSwimmer.height / 2);
     
   }
@@ -93,7 +98,7 @@ class Swimmer {
     newX = this.x;
     newY = this.y;
     if (score > 0) {
-      score = score - 50;
+      score = score - 100;
     }
   }
   
