@@ -5,4 +5,5 @@
    1. Move the swimmer around the screen to collect coins
    2. Avoid the sharks (if you intersect with one, you will lose a life) 
    3. Connect with the sailboats to travel horizontally
+   4. [Space] will pause the game. Press enter to resume.
 1. If you win or lose, click the displayed button to play again
