@@ -155,6 +155,7 @@ void graph_display( String x_axis, String y_axis, float x_max, float y_max, floa
   line(60,550,60,50);
   
   textFont(createFont("Courier", 20));
+  text("Comparing Possum Measurements", 190, 40);
   text(x_axis, 320, 590);
   
   pushMatrix();
