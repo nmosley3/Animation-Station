@@ -169,6 +169,14 @@ void graph_display( String x_axis, String y_axis, float x_max, float y_max, floa
   label_x(x_max,x_min);
   label_y(y_max,y_min);
   
+  text("Key:",650,470);
+  text("pink = female",650,490);
+  text("blue = male", 650, 510);
+  text("DataPoint Size dependant on age", 650, 530);
+  text("Larger Data Point = older", 650, 550);
+  noFill();
+  rect(645,460, 200, 95);
+  
   
 }
   
