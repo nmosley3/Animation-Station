@@ -1,0 +1,52 @@
+Group_15_assignment8_part1:
+
+Rakshana Govindarajan worked on this part of the assignment. The dataset used is “Nile.csv” which shows 
+the flow of the river Nile over the last 100 years. The x-axis represents the year (ex. 1870) and the y-axis
+ represents the flow of the river. The interactive element in the visualization is that the viewer may select
+ radio buttons for “Start Date” and “End Date” to view the data in the line graph within the specified year 
+range. This allows for the user to change the range of displayed data and modify the portion of the line graph 
+seen. Resource used as reference for creating line graph is: https://gist.github.com/kadamwhite/d407218cf2f8e44e979a. 
+The Radio_Button class is based on Maddie Pellman’s Radio_Button class in part 2 of the assignment. 
+
+Group_15_assignment8_part2:
+
+Maddie Pellman worked on this part of the assignment, she used the “possum.csv” dataset. The visualization looks 
+at different possum measurements and compares them. For each correlation shown, four dimensions of data are 
+displayed. The first two are more obvious to interpret without additional knowledge. Those two are the x and y 
+axis dimensions. On the right hand of the screen, there are five radio button options for both the X and Y-Axis. 
+The user can select which dimensions, between Head Length (mm), Skull Width (mm), Total Length (cm), Tail Length 
+(cm), Foot Length (mm) they want to compare on the X and Y Axis. Because they are radio buttons, only one dimension 
+for each axis can be selected at a time. The are two other dimensions that affect the visualization. The first is 
+the gender of the opossums. If the opossum is female, the datapoint is colored pink. If the possum is male, the 
+datapoint is colored blue. The fourth and final dimension is the age of the possum. In the dataset, the possum’s 
+age ranges from 1 and 9 years. The older the possum, the larger their datapoint. 
+
+Group_15_assignment8_part3:
+Nathan Mosley worked on this part of the assignment. I used XML data from CNBC for World News, US News, US Economy, 
+Technology, and Media. The RSS feed uses three objects, Radio_Button, PageNavigationButton, and Headline. The XML 
+data is scraped and stored into a headline object, which contains the headline, description, and url. The radio 
+buttons include the category name (Media, Technology, etc.) and a color associated with it, as well as the RSS 
+feeds publication date. Switching between the radio buttons will change the “feed”  to the selected radio button. 
+The feed will display 5 news stories at a time, and the user can navigate between “pages” that will show more 
+news stories, up to 30 (the amount supplied by CNBC). The PageNavigationButton class simply changes the pages as 
+described. When the user cursors over one of the news stories, the description is displayed below, and if a user 
+clicks, they will be redirected to the story in their web browser. 
+Note: The categories are color coordinated via the category name. Since the feed was designed to only show stories
+within the same category at once, the color of the headlines were left black, so as not to clutter UI.
+
+Unexpected Challenges: 
+
+For part 1, an unexpected challenge was modifying the data displayed to match the selections made by the user 
+using the radio buttons. It was tricky to decide between using an array, arrayList, and intList, because all three 
+types do not have the same functionality, especially when it comes to adding and removing elements. Converting 
+between the different structures to gather only the data needed for the display was challenging.
+
+For part 2, one unexpected challenge was displaying the data points and x and y axis labels in the correct spot. 
+From a coding perspective, this wasn’t that hard. It simply took more math computation than expected to figure 
+out the formula that would correctly place the data points and labels in the right spot (since their x and y 
+values did not directly correlate to the x and y placement on the screen). 
+
+For part 3, one of the more difficult challenges was writing a loop that would display the headlines of news stories 
+without going off the screen. Also, due to the extensive amount of object-oriented programming required to generate 
+the RSS feed, it was often difficult to go back and edit objects or code. I would have to occasionally refamiliarize 
+myself with the class or block of code I had to edit.
