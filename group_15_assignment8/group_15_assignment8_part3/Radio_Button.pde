@@ -39,6 +39,7 @@ class Radio_Button{
         if (i == id){
           radiobuttons[i].isOver = true;
           currentPage = 0;
+          currentHeadlineIdx = 0;
           
           //call here to draw the correct data points 
           //would this be done in an OK order??

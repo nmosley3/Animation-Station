@@ -18,10 +18,10 @@ class PageNavigationButton {
     rect(x + 2, y + 2, w - 4, h - 4);
     if (directionId == 0) {
       fill(0);
-      text("<", x - 9 + w / 2, y + 12 + h/ 2); 
+      text("<", x - 9 + w / 2, y + 9 + h/ 2); 
     } else if (directionId == 1) {
       fill(0);
-      text(">", x - 9 + w / 2, y + 12 + h/ 2); 
+      text(">", x - 9 + w / 2, y + 9 + h/ 2); 
     }
     
   }
