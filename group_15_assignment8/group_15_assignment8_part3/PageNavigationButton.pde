@@ -29,8 +29,10 @@ class PageNavigationButton {
   void changePage () {
     if (directionId == 0 && currentPage > 0) {
       currentPage -= 1;
+      currentHeadlineIdx = 0;
     } else if (directionId == 1 && currentPage < 5){
       currentPage += 1;
+      currentHeadlineIdx = 0;
     
   }
   

@@ -39,7 +39,7 @@ void setup(){
   currentHeadlineIdx = 0;
   
   Previous = new PageNavigationButton(190, 18, 30, 70, 0);
-  Next = new PageNavigationButton(900, 18, 30, 70, 1);
+  Next = new PageNavigationButton(910, 18, 30, 70, 1);
 
   
   size(1000, 500);
@@ -139,11 +139,11 @@ void setup(){
   }   
   
   // Initialize buttons
-  radioButtons[0] = new Radio_Button(85, 90 * (1) - 15, 15, color(0), color(255), radioButtons, 0, "World News", date);
-  radioButtons[1] = new Radio_Button(85, 90 * (2) - 15, 15, color(0), color(255), radioButtons, 1, "US News", date1);
-  radioButtons[2] = new Radio_Button(85, 90 * (3) - 15, 15, color(0), color(255), radioButtons, 2, "US Economy", date2);
-  radioButtons[3] = new Radio_Button(85, 90 * (4) - 15, 15, color(0), color(255), radioButtons, 3, "Technology", date3);
-  radioButtons[4] = new Radio_Button(85, 90 * (5) - 15, 15, color(0), color(255), radioButtons, 4, "Media", date4);
+  radioButtons[0] = new Radio_Button(85, 90 * (1) - 15, 15, color(0), color(255), radioButtons, 0, "World News", date, color(#000099));
+  radioButtons[1] = new Radio_Button(85, 90 * (2) - 15, 15, color(0), color(255), radioButtons, 1, "US News", date1, color(#cc0000));
+  radioButtons[2] = new Radio_Button(85, 90 * (3) - 15, 15, color(0), color(255), radioButtons, 2, "US Economy", date2, color(#ffcc00));
+  radioButtons[3] = new Radio_Button(85, 90 * (4) - 15, 15, color(0), color(255), radioButtons, 3, "Technology", date3, color(#009900));
+  radioButtons[4] = new Radio_Button(85, 90 * (5) - 15, 15, color(0), color(255), radioButtons, 4, "Media", date4, color(#9900cc));
   
   
   // Add all feeds to the allFeeds list
@@ -162,12 +162,16 @@ void draw(){
   
   printYPosition = 85;
   
-  Next.display();
-  Previous.display();
-  
   // draw the blue rectangle on the left
   fill(color(169,192,233));
   rect (0, 0, 170, height);
+  
+  fill(color(255));
+  rect (170, 356, 830, 132);
+  
+  fill(0);
+  rect (185, 54, width - 20 - 180, 3);
+  rect (185, 355, width - 20 - 180, 3);
   
   
   // draw radio buttons and their text
@@ -193,10 +197,13 @@ void draw(){
   Radio_Button currentButton = radioButtons[currentFeedIdx];
   textFont(headerFont);
   strokeWeight(20);
-  text("CNBC " + currentButton.text + ", " + currentButton.date, 150 + 850 / 2 - textWidth(currentButton.text + "CNBC " + ", " + currentButton.date) / 2, 45);
+  text(" CNBC " + currentButton.text + ", " + currentButton.date, 150 + 850 / 2 - textWidth(currentButton.text + "CNBC " + ", " + currentButton.date) / 2, 45);
   
   checkForMousePosition();
   displayDescription();
+  
+  Next.display();
+  Previous.display();
   
 }
 
@@ -212,7 +219,7 @@ void mousePressed(){
     return;
   }
   
-  if (mouseX > 190 && mouseY < 360 && mouseY > 80) {
+  if (mouseX > 190 && mouseY < 360 && mouseY > 60) {
     link(currentHeadline.url);
   }
   

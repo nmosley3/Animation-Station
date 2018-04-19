@@ -11,7 +11,9 @@ class Radio_Button{
   
   String date;
   
-  Radio_Button(float x, float y, int or, color oc, color ic, Radio_Button[] rg, int id, String text, String date){
+  color categoryColor;
+  
+  Radio_Button(float x, float y, int or, color oc, color ic, Radio_Button[] rg, int id, String text, String date, color categoryColor){
     
     this.x = x;
     this.y = y;
@@ -22,6 +24,7 @@ class Radio_Button{
     this.id = id;
     this.text = text;
     this.date = date;
+    this.categoryColor = categoryColor;
     
     //why do I need to pass this in?? 
     //how do they become a part of this list? 
@@ -66,6 +69,7 @@ class Radio_Button{
     noStroke();
     fill(outerColor);
     ellipse(x,y,outerRadius*2,outerRadius*2);
+    fill(categoryColor);
     
     if(isOver){
       fill(innerColor);
