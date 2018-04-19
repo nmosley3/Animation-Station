@@ -11,12 +11,6 @@ ArrayList<Headline> allHeadlines5;
 
 // list of radio_buttons to pass into each button object
 Radio_Button[] radioButtons = new Radio_Button[5];
-Headline[] headlines = new Headline[30];
-Headline[] headlines2 = new Headline[30];
-Headline[] headlines = new Headline[30];
-Headline[] headlines = new Headline[30];
-Headline[] headlines = new Headline[30];
-
 ArrayList<Headline> currentFeed;
 
 // variables to track selected button
@@ -30,7 +24,7 @@ PFont categoryFont;
 // variable to track y position of text
 int printYPosition;
 
-int currentHeadline;
+int currentPage;
 int headlinesOnLastPage;
 
 String date, date1, date2, date3, date4;
@@ -40,7 +34,7 @@ PageNavigationButton Next, Previous;
 
 void setup(){
   
-  currentHeadline = 0;
+  currentPage = 0;
   headlinesOnLastPage = 0;
   
   Previous = new PageNavigationButton(190, 18, 30, 70, 0);
@@ -178,12 +172,8 @@ void draw(){
   
   // draw the feed
   currentFeed = allFeeds.get(currentFeedIdx);
-  headlinesOnLastPage = 0;
-  for (int i = currentHeadline; i < currentFeed.size(); i++) {
-    if (printYPosition < 300) {
+  for (int i = currentPage * 5; i < (currentPage + 1) * 5; i++) {
     currentFeed.get(i).display();
-    headlinesOnLastPage += 1;
-  }
   }
   
   // get the current radio button idx

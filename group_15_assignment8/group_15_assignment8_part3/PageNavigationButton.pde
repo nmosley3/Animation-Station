@@ -27,10 +27,10 @@ class PageNavigationButton {
   }
   
   void changePage () {
-    if (directionId == 0) {
-      //currentPage -= 1;
-    } else {
-     // currentPage += 1;
+    if (directionId == 0 && currentPage > 0) {
+      currentPage -= 1;
+    } else if (directionId == 1 && currentPage < 5){
+      currentPage += 1;
     
   }
   
