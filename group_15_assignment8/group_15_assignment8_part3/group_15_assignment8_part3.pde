@@ -1,41 +1,67 @@
-
+// Arraylist to hold all feeds
 ArrayList<ArrayList<Headline>> allFeeds;
 int currentFeedIdx;
 
+// Array list for the headlines in each feed
 ArrayList<Headline> allHeadlines;
 ArrayList<Headline> allHeadlines2;
 ArrayList<Headline> allHeadlines3;
 ArrayList<Headline> allHeadlines4;
 ArrayList<Headline> allHeadlines5;
 
+// list of radio_buttons to pass into each button object
 Radio_Button[] radioButtons = new Radio_Button[5];
+Headline[] headlines = new Headline[30];
+Headline[] headlines2 = new Headline[30];
+Headline[] headlines = new Headline[30];
+Headline[] headlines = new Headline[30];
+Headline[] headlines = new Headline[30];
 
 ArrayList<Headline> currentFeed;
 
+// variables to track selected button
 int button_id;
 Boolean button_checked;
 
+// fonts
 PFont headerFont;
+PFont categoryFont;
+
+// variable to track y position of text
+int printYPosition;
+
+int currentHeadline;
+int headlinesOnLastPage;
+
+String date, date1, date2, date3, date4;
+
+PageNavigationButton Next, Previous;
+
 
 void setup(){
   
+  currentHeadline = 0;
+  headlinesOnLastPage = 0;
+  
+  Previous = new PageNavigationButton(190, 18, 30, 70, 0);
+  Next = new PageNavigationButton(900, 18, 30, 70, 1);
+
+  
   size(1000, 500);
   background(255);
-  
-  // Initialize buttons
-  radioButtons[0] = new Radio_Button(85, 90 * (1) - 15, 15, color(0), color(255), radioButtons, 0, "World News");
-  radioButtons[1] = new Radio_Button(85, 90 * (2) - 15, 15, color(0), color(255), radioButtons, 1, "US News");
-  radioButtons[2] = new Radio_Button(85, 90 * (3) - 15, 15, color(0), color(255), radioButtons, 2, "US Economy");
-  radioButtons[3] = new Radio_Button(85, 90 * (4) - 15, 15, color(0), color(255), radioButtons, 3, "Technology");
-  radioButtons[4] = new Radio_Button(85, 90 * (5) - 15, 15, color(0), color(255), radioButtons, 4, "Media");
   
   allFeeds = new ArrayList<ArrayList<Headline>>();
   
   currentFeedIdx = 0;
   
   // create fonts for header and body
-  headerFont = createFont("Copperplate Gothic Bold", 32);
+  headerFont = createFont("Impact", 32);
+  categoryFont = createFont("Copperplate Gothic Bold", 18);
   
+  
+  // Load all the News Feeds
+  //
+  //
   // XML World News
   XML root = loadXML("https://www.cnbc.com/id/100727362/device/rss/rss.xml").getChild("channel");
   XML[] headlines = root.getChildren("item");
@@ -45,6 +71,7 @@ void setup(){
   for (XML l: headlines) {
     String headline = l.getChild("title").getContent();
     String description = l.getChild("description").getContent();
+    date = l.getChild("pubDate").getContent();
     Headline newHeadline = new Headline(headline, description, numHeadline);
     allHeadlines.add(newHeadline);
     numHeadline += 1;
@@ -60,6 +87,7 @@ void setup(){
   for (XML l: headlines2) {
     String headline = l.getChild("title").getContent();
     String description = l.getChild("description").getContent();
+    date1 = l.getChild("pubDate").getContent();
     Headline newHeadline = new Headline(headline, description, numHeadline2);
     allHeadlines2.add(newHeadline);
     numHeadline2 += 1;
@@ -74,6 +102,7 @@ void setup(){
   for (XML l: headlines3) {
     String headline = l.getChild("title").getContent();
     String description = l.getChild("description").getContent();
+    date2 = l.getChild("pubDate").getContent();
     Headline newHeadline = new Headline(headline, description, numHeadline3);
     allHeadlines3.add(newHeadline);
     numHeadline3 += 1;
@@ -87,7 +116,8 @@ void setup(){
   
   for (XML l: headlines4) {
     String headline = l.getChild("title").getContent();
-    String description = l.getChild("description").getContent();
+    String description = l.getChild("description").getContent(); 
+    date3 = l.getChild("pubDate").getContent();
     Headline newHeadline = new Headline(headline, description, numHeadline4);
     allHeadlines4.add(newHeadline);
     numHeadline4 += 1;
@@ -101,11 +131,20 @@ void setup(){
   
   for (XML l: headlines5) {
     String headline = l.getChild("title").getContent();
-    String description = l.getChild("description").getContent();
+    String description = l.getChild("description").getContent();  
+    date4 = l.getChild("pubDate").getContent();
     Headline newHeadline = new Headline(headline, description, numHeadline5);
     allHeadlines5.add(newHeadline);
     numHeadline5 += 1;
   }   
+  
+  // Initialize buttons
+  radioButtons[0] = new Radio_Button(85, 90 * (1) - 15, 15, color(0), color(255), radioButtons, 0, "World News", date);
+  radioButtons[1] = new Radio_Button(85, 90 * (2) - 15, 15, color(0), color(255), radioButtons, 1, "US News", date1);
+  radioButtons[2] = new Radio_Button(85, 90 * (3) - 15, 15, color(0), color(255), radioButtons, 2, "US Economy", date2);
+  radioButtons[3] = new Radio_Button(85, 90 * (4) - 15, 15, color(0), color(255), radioButtons, 3, "Technology", date3);
+  radioButtons[4] = new Radio_Button(85, 90 * (5) - 15, 15, color(0), color(255), radioButtons, 4, "Media", date4);
+  
   
   // Add all feeds to the allFeeds list
   allFeeds.add(allHeadlines);
@@ -119,10 +158,15 @@ void setup(){
 }
 
 void draw(){
-  background(215);
+  background(230);
+  
+  printYPosition = 85;
+  
+  Next.display();
+  Previous.display();
   
   // draw the blue rectangle on the left
-  fill(color(52,76,135));
+  fill(color(169,192,233));
   rect (0, 0, 170, height);
   
   
@@ -134,10 +178,12 @@ void draw(){
   
   // draw the feed
   currentFeed = allFeeds.get(currentFeedIdx);
-  for (int i = 0; i < 5; i++) {
-    //if (textWidth(currentFeed.get(i).headline) + 100 > width) {
-      currentFeed.get(i).display();
-    //}
+  headlinesOnLastPage = 0;
+  for (int i = currentHeadline; i < currentFeed.size(); i++) {
+    if (printYPosition < 300) {
+    currentFeed.get(i).display();
+    headlinesOnLastPage += 1;
+  }
   }
   
   // get the current radio button idx
@@ -151,19 +197,25 @@ void draw(){
   Radio_Button currentButton = radioButtons[currentFeedIdx];
   textFont(headerFont);
   strokeWeight(20);
-  text(currentButton.text, 150 + 850 / 2 - textWidth(currentButton.text) / 2, 45);
+  text("CNBC " + currentButton.text + ", " + currentButton.date, 150 + 850 / 2 - textWidth(currentButton.text + "CNBC " + ", " + currentButton.date) / 2, 45);
   
 }
 
+
+
 void mousePressed(){
+  
+  if (mouseX > 190 && mouseX < 260 && mouseY > 18 && mouseY < 48) {
+    Previous.changePage();
+  } else if (mouseX > 900 && mouseX < 970 && mouseY > 18 && mouseY < 48){
+    Next.changePage();
+  }
     
-     
     for (int i = 0; i < radioButtons.length; i++){
-      
-      
       if(radioButtons[i].isOver(mouseX, mouseY)){
           button_id = i;
           button_checked = true;
       } 
     }  
+    
 }
