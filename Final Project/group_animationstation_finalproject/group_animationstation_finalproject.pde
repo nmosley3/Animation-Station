@@ -1,6 +1,15 @@
 import controlP5.*; 
 
-ControlP5 cp5;
+public enum GameState {
+  
+  STARTGUI, PLAYSCREENGUI, LOADCITYGUI
+  
+}
+
+
+GameState state;
+ControlP5 playScreenGUI, startGUI, loadCityGUI;
+
 RadioButton bed, bldgimgs, soundrb, birdrb, stormrb;
 PImage blg, blg2; 
 Group bldgkey, legend;
@@ -12,10 +21,104 @@ void setup(){
   
   size(1000,600);
   textFont(createFont("Miniml",15));
-  cp5 = new ControlP5(this);
+  
+  //this is the default GUI
+  //Rakshana -- when you have your code working, change default
+  //screen to STARTGUI
+  state = GameState.PLAYSCREENGUI; 
+  
+  createPlayScreen();
+  
+  //RAKSHANA: I created 2 calls to create your two GUIS, put your code in those calls
+  //also, note the GUI names I created above and make sure to use those
+  createStartScreen();
+  createLoadScreen();
+  
+  //RAKSHANA: In your event calls, make sure to switch the state. If the user presses play new
+  //game: switch the game state to PLAYSCREENGUI (Code:  state = GameState.PLAYSCREENGUI; )
+  //If the user presses load existing, switch the game state to LOADCITYGUI 
+  //(Code: state = GameState.LOADCITYGUI;) 
+  
+  
+ 
+}
+
+
+
+void draw() {
+ 
+  
+
+  
+  switch(state){
+    
+    case STARTGUI: 
+      startGUI.show();
+      playScreenGUI.hide();
+      loadCityGUI.hide();
+      break;
+      
+    
+    case PLAYSCREENGUI:
+    
+      background(98,204,232);
+      noStroke();
+      fill(98,232,130);
+      rect(0,530,800,70);
+      playScreenGUI.show();
+        if (display_images){
+            displayBuildingImages();
+            }
+       startGUI.hide();
+       loadCityGUI.hide();
+       break;
+      
+    case LOADCITYGUI:
+    
+      startGUI.hide();
+      playScreenGUI.hide();
+      loadCityGUI.show();
+      break;
+    
+    default:
+      //Good practice to have a default screen. 
+      startGUI.show();
+      playScreenGUI.hide();
+      loadCityGUI.hide();
+      break;
+      
+    
+  }
+  
+
+  
+  
+}
+
+void displayBuildingImages(){
+  
+    fill(252,243,227);
+    noStroke();
+    rect(810,350,170,180);
+    fill(0);
+    text("For Reference:",820,370);
+    
+    image(blg,820,380);
+    text("Building One", 865, 400);
+    image(blg2,820,430);
+    text("Building Two", 865, 455);
+    image(blg, 820, 480);
+    text("Building Three", 865, 505);
+    
+}
+
+void createPlayScreen(){
+  
+  
+  playScreenGUI = new ControlP5(this);
   
   //create my desired group
-  legend = cp5.addGroup("legend")
+  legend = playScreenGUI.addGroup("legend")
                      .setPosition(810,100)
                      .setSize(170,220)
                      .activateEvent(true)
@@ -28,7 +131,7 @@ void setup(){
     //go through each item and change the size
     item.resize(item.width/2,item.width/2);
   }
-  cp5.addButton("up")
+  playScreenGUI.addButton("up")
      .setPosition(110,10)
      .setImages(arrows[0],arrows[1],arrows[0])
      .setSize(arrows[0])
@@ -36,7 +139,7 @@ void setup(){
      ;
      
    
-   cp5.addButton("right")
+   playScreenGUI.addButton("right")
      .setPosition(140,30)
      .setImages(arrows[2],arrows[3],arrows[2])
      .setSize(arrows[0])
@@ -44,14 +147,14 @@ void setup(){
      ;
      
 
-    cp5.addButton("down")
+    playScreenGUI.addButton("down")
      .setPosition(110,50)
      .setImages(arrows[4],arrows[5],arrows[4])
      .setSize(arrows[0])
      .setGroup(legend)
      ;
      
-    cp5.addButton("left")
+    playScreenGUI.addButton("left")
      .setPosition(80,30)
      .setImages(arrows[6],arrows[7],arrows[6])
      .setSize(arrows[0])
@@ -64,7 +167,7 @@ void setup(){
    for (PImage item : sound){
      item.resize(item.width/35,item.width/35);
    }
-       soundrb = cp5.addRadioButton("Sound")
+       soundrb = playScreenGUI.addRadioButton("Sound")
       .setPosition(15, 95)
       .setImages(sound[0],sound[0],sound[1])
       .setGroup(legend)
@@ -76,7 +179,7 @@ void setup(){
    for (PImage item : bird){
      item.resize(item.width/8,item.width/8);
    }
-   birdrb = cp5.addRadioButton("Bird")
+   birdrb = playScreenGUI.addRadioButton("Bird")
                .setPosition(15,170)
                .setImages(bird[0],bird[0],bird[1])
                .setGroup(legend)
@@ -87,7 +190,7 @@ void setup(){
    for (PImage item : storm){
      item.resize(item.width/9,item.width/9);
    }
-   stormrb = cp5.addRadioButton("Storm")
+   stormrb = playScreenGUI.addRadioButton("Storm")
                .setPosition(70,170)
                .setImages(storm[0],storm[0],storm[1])
                .setGroup(legend)
@@ -96,7 +199,7 @@ void setup(){
    
    
    //Radio Buttons for Build, Edit, Delete
-   bed = cp5.addRadioButton("radioButtonbed")
+   bed = playScreenGUI.addRadioButton("radioButtonbed")
              .setPosition(100,90)
              .setSize(20,20)
              .setColorLabel(color(0))
@@ -111,7 +214,7 @@ void setup(){
    blg2 = loadImage("bldg_placeholder_2.png");
    blg.resize(blg.width/5,blg.width/5);
    blg2.resize(blg2.width/5,blg2.width/5);
-   bldgimgs = cp5.addRadioButton("radioButtonbldgs")
+   bldgimgs = playScreenGUI.addRadioButton("radioButtonbldgs")
                  .setPosition(15,10)
                  .setItemsPerRow(1)
                  //.setImages(blg,blg,blg2)
@@ -124,39 +227,20 @@ void setup(){
                  ;
   
   
-
-       
   
 }
 
 
-
-void draw() {
+void createStartScreen(){
   
-  background(98,204,232);
-  noStroke();
-  fill(98,232,130);
-  rect(0,530,800,70);
+  startGUI = new ControlP5(this);
   
-  //Might put this in its own method to clean up draw loop
-  if (display_images){
-    
-    fill(252,243,227);
-    noStroke();
-    rect(810,350,170,180);
-    fill(0);
-    text("For Reference:",820,370);
-    
-    image(blg,820,380);
-    text("Building One", 865, 400);
-    image(blg2,820,430);
-    text("Building Two", 865, 455);
-    image(blg, 820, 480);
-    text("Building Three", 865, 505);
-    
-  }
 }
 
+void createLoadScreen(){
+  
+  loadCityGUI = new ControlP5(this);
+}
 void controlEvent(ControlEvent theEvent){
   
   //check to see what radio button this is from
