@@ -1,7 +1,7 @@
 import controlP5.*; 
 
 ControlP5 cp5;
-RadioButton bed, bldgimgs;
+RadioButton bed, bldgimgs, soundrb, birdrb, stormrb;
 PImage blg, blg2; 
 Group bldgkey, legend;
 Boolean display_images = true;
@@ -23,38 +23,78 @@ void setup(){
   
   //This block of code took care of ARROWS
   //Having a hard time getting the pictures loaded...
-  PImage[] u_arrows = {loadImage("button_up.png"), loadImage("button_up_2.png")};
+  PImage[] arrows = {loadImage("button_up.png"), loadImage("button_up_2.png"),loadImage("button_right.png"), loadImage("button_right_2.png"),loadImage("button_down.png"), loadImage("button_down_2.png"),loadImage("button_left.png"), loadImage("button_left_2.png")};
+  for (PImage item : arrows){
+    //go through each item and change the size
+    item.resize(item.width/2,item.width/2);
+  }
   cp5.addButton("up")
      .setPosition(110,10)
-     .setImages(u_arrows)
-     .setSize(u_arrows[0].width/2,u_arrows[0].width/2)
+     .setImages(arrows[0],arrows[1],arrows[0])
+     .setSize(arrows[0])
      .setGroup(legend)
      ;
      
-   PImage[] r_arrows = {loadImage("button_right.png"), loadImage("button_right_2.png")};
+   
    cp5.addButton("right")
      .setPosition(140,30)
-     .setImages(r_arrows)
-     .setSize(r_arrows[0].width/2,r_arrows[0].width/2)
+     .setImages(arrows[2],arrows[3],arrows[2])
+     .setSize(arrows[0])
      .setGroup(legend)
      ;
      
-    PImage[] d_arrows = {loadImage("button_down.png"), loadImage("button_down_2.png")};
+
     cp5.addButton("down")
      .setPosition(110,50)
-     .setImages(d_arrows)
-     .setSize(d_arrows[0].width/2,d_arrows[0].width/2)
+     .setImages(arrows[4],arrows[5],arrows[4])
+     .setSize(arrows[0])
      .setGroup(legend)
      ;
      
-    PImage[] l_arrows = {loadImage("button_left.png"), loadImage("button_left_2.png")};
     cp5.addButton("left")
      .setPosition(80,30)
-     .setImages(l_arrows)
-     .setSize(l_arrows[0].width/2,l_arrows[0].width/2)
+     .setImages(arrows[6],arrows[7],arrows[6])
+     .setSize(arrows[0])
      .setGroup(legend)
      ;
     
+    
+   //adding Bird Button
+   PImage[] sound = {loadImage("sound.png"),loadImage("mute.png")};
+   for (PImage item : sound){
+     item.resize(item.width/35,item.width/35);
+   }
+       soundrb = cp5.addRadioButton("Sound")
+      .setPosition(15, 95)
+      .setImages(sound[0],sound[0],sound[1])
+      .setGroup(legend)
+      .addItem("sound",0)
+      ;
+      
+     //NEED TO FIGURE OUT WHY THE DISPLAY FUNCTION GOES AWAY 
+   PImage[] bird = {loadImage("bird.png"),loadImage("bird_2.png")};
+   for (PImage item : bird){
+     item.resize(item.width/8,item.width/8);
+   }
+   birdrb = cp5.addRadioButton("Bird")
+               .setPosition(15,170)
+               .setImages(bird[0],bird[0],bird[1])
+               .setGroup(legend)
+               .addItem("bird",0)
+               ;
+   
+   PImage[] storm = {loadImage("storm.png"),loadImage("storm_2.png")};
+   for (PImage item : storm){
+     item.resize(item.width/9,item.width/9);
+   }
+   stormrb = cp5.addRadioButton("Storm")
+               .setPosition(70,170)
+               .setImages(storm[0],storm[0],storm[1])
+               .setGroup(legend)
+               .addItem("storm",0)
+               ;
+   
+   
    //Radio Buttons for Build, Edit, Delete
    bed = cp5.addRadioButton("radioButtonbed")
              .setPosition(100,90)
@@ -161,6 +201,28 @@ void controlEvent(ControlEvent theEvent){
     }
     
   }
+  else if(theEvent.isFrom(soundrb)){
+    
+    println("Sound is being pressed");
+    //Rakshana: Can't tell which switch it is on, but from here we can basically make a sound boolean
+    //the opposite of what it was
+   
+    
+  }
+  
+  else if (theEvent.isFrom(birdrb)){
+    println("Bird is being pressed");
+    //Rakshana: Can't tell which switch it is on, but here you can switch the sound of bird to on or off
+    //even if bird is pressed -- make sure you check to see if sound is muted because that
+    //will affect if the bird sound is actually displayed
+  }
+  
+    else if (theEvent.isFrom(stormrb)){
+    println("Storm is being pressed");
+    //Rakshana: Can't tell which switch it is on, but here you can switch the sound of storm to on or off
+    //even if storm is pressed -- make sure you check to see if sound is muted because that
+    //will affect if the storm sound is actually displayed
+  }
   else if(theEvent.isGroup()){
     if (theEvent.getGroup() == legend && theEvent.getGroup().isOpen()){
       
@@ -169,7 +231,7 @@ void controlEvent(ControlEvent theEvent){
       
       
     }
-    else{
+    else if (theEvent.getGroup() == legend && theEvent.getGroup().isOpen() == false){
       display_images = false;
     }
   }
