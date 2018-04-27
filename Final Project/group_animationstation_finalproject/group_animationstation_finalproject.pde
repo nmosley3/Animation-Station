@@ -67,7 +67,7 @@ void setup(){
   //RAKSHANA: I created 2 calls to create your two GUIS, put your code in those calls
   //also, note the GUI names I created above and make sure to use those
   createStartScreen();
-  //createLoadScreen();
+  createLoadScreen();
   
   //RAKSHANA: In your event calls, make sure to switch the state. If the user presses play new
   //game: switch the game state to PLAYSCREENGUI (Code:  state = GameState.PLAYSCREENGUI; )
@@ -87,12 +87,13 @@ void draw() {
     case STARTGUI: 
       startGUI.show();
       playScreenGUI.hide();
-      //loadCityGUI.hide();
+      loadCityGUI.hide();
       break;
       
     
     case PLAYSCREENGUI:
-    
+      textFont(createFont("Miniml",15));
+
       background(98,204,232);
       noStroke();
       fill(98,232,130);
@@ -101,22 +102,39 @@ void draw() {
         if (display_images){
             displayBuildingImages();
             }
+       
        startGUI.hide();
-       //loadCityGUI.hide();
+       loadCityGUI.hide();
        break;
       
     case LOADCITYGUI:
     
+      background(color(25,96,193));
+  
+      skyline = loadImage("skyline.jpg");
+      // Setting up background image
+      pushMatrix();
+      scale(1.2);
+      image(skyline,0,0);
+      popMatrix();
+        
+      stroke(0);
+      fill(255);
+      textSize(30);
+      textFont(castellar);
+      text("City Skyline", 385,345);
+      textSize(20);
+      text("Enter name of previously created city",290,400);
       startGUI.hide();
       playScreenGUI.hide();
-      //loadCityGUI.show();
+      loadCityGUI.show();
       break;
     
     default:
       //Good practice to have a default screen. 
       startGUI.show();
       playScreenGUI.hide();
-      //loadCityGUI.hide();
+      loadCityGUI.hide();
       break;
       
     
@@ -265,7 +283,7 @@ void createPlayScreen(){
                  .setGroup(legend)
                  ;
   
-  
+
   
 }
 
@@ -291,7 +309,7 @@ void createStartScreen(){
   stroke(0);
   fill(255);
   textSize(30);
-  text("City Skyline", 360,345);
+  text("City Skyline", 385,345);
   
   // Displays buttons for user to select action
   createNewCity.display();
@@ -305,24 +323,13 @@ void createLoadScreen(){
   // NEED TO CHECK TEXTBOX FUNCTIONALITY - WHEN TYPING IN BOX FOR A SECOND TIME, GOES TO NEXT SCREEN
   loadCityGUI = new ControlP5(this);
   
-  background(color(25,96,193));
-  skyline = loadImage("skyline.jpg");
-  // Setting up background image
-  pushMatrix();
-  scale(1.2);
-  image(skyline,0,0);
-  popMatrix();
-    
-  stroke(0);
-  fill(255);
-  textSize(30);
-  textFont(castellar);
-  text("City Skyline", 360,345);
-  textSize(20);
-  text("Enter name of previously created city",290,400);
-  
   arial = createFont("Arial", 12);
   textFont(arial);
+  
+  
+ 
+ 
+  
   
   loadCityGUI.addTextfield("input")
    .setPosition(350,415)
@@ -346,13 +353,13 @@ void createLoadScreen(){
   ;
 
   
-   /* 
+    
    loadCityGUI.addTextfield("default")
    .setPosition(20,550)
    .setFont(arial)
    .setAutoClear(false)
    ;
-   */
+   
 
   textFont(arial);
   
@@ -483,17 +490,17 @@ void displayAllBuildings() {
 void mousePressed() {
   // Code for selecting which screen to go to
   // If "Create New City" button is pressed, user is taken to the screen to create a new city
-  if(mouseX > createNewCity.x && mouseX < (createNewCity.x + createNewCity.w) && mouseY > createNewCity.y && mouseY < (createNewCity.y + createNewCity.h)) {
+  if(state == GameState.STARTGUI && mouseX > createNewCity.x && mouseX < (createNewCity.x + createNewCity.w) && mouseY > createNewCity.y && mouseY < (createNewCity.y + createNewCity.h)) {
     println("Create new city!");
     state = GameState.PLAYSCREENGUI;
     
   }
   
   // If "Load Existing City" button is pressed, user is taken to the screen to load in an pre-existing city  
-  else if(mouseX > loadExistingCity.x && mouseX < (loadExistingCity.x + loadExistingCity.w) && mouseY > loadExistingCity.y && mouseY < (loadExistingCity.y + loadExistingCity.h)) {
+  else if(state == GameState.STARTGUI && mouseX > loadExistingCity.x && mouseX < (loadExistingCity.x + loadExistingCity.w) && mouseY > loadExistingCity.y && mouseY < (loadExistingCity.y + loadExistingCity.h)) {
     println("Load existing city!");
     state = GameState.LOADCITYGUI;
-    createLoadScreen();
+    //createLoadScreen();
 
   }
   
