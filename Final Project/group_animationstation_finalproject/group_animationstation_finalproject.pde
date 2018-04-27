@@ -44,6 +44,7 @@ String textValue = "";
 
 Button createNewCity;
 Button loadExistingCity;
+Button mainFromCreate;
 
 
 void setup(){
@@ -103,6 +104,7 @@ void draw() {
             displayBuildingImages();
             }
        
+    
        startGUI.hide();
        loadCityGUI.hide();
        break;
@@ -174,6 +176,8 @@ void createPlayScreen(){
   
   playScreenGUI = new ControlP5(this);
   
+  
+
   //create my desired group
   legend = playScreenGUI.addGroup("legend")
                      .setPosition(810,100)
@@ -282,8 +286,15 @@ void createPlayScreen(){
                  .addItem("Bldg3",2)
                  .setGroup(legend)
                  ;
+                 
+   // Button to go back to main menu              
+   playScreenGUI.addButton("Menu")
+     .setValue(10)
+     .setPosition(820,30)
+     .setSize(150,40)
+     ;
   
-
+  
   
 }
 
@@ -362,6 +373,13 @@ void createLoadScreen(){
    
 
   textFont(arial);
+  
+  // Button to go back to main menu              
+   loadCityGUI.addButton("Menu")
+     .setValue(10)
+     .setPosition(820,30)
+     .setSize(150,40)
+     ;
   
 }
 void controlEvent(ControlEvent theEvent){
@@ -504,6 +522,7 @@ void mousePressed() {
 
   }
   
+ 
   // Code for clicking to place buildings
   if (placingBuilding) {
     if (mouseX > 0 && mouseX < 800 - newBuilding.buildingWidth) {
@@ -551,4 +570,10 @@ public void clear() {
 
 public void input (String theText) {
   println("a textfield event for controller 'input' : "+ theText);
+}
+
+public void Menu (int theValue) {
+  println("Go back to main menu");
+  //state = GameState.STARTGUI;
+  
 }
