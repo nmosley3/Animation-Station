@@ -36,6 +36,16 @@ Boolean display_images = true;
 
 PFont miniml;
 
+// Variables for GUI's
+PImage skyline;
+PFont castellar;
+PFont arial;
+String textValue = "";
+
+Button createNewCity;
+Button loadExistingCity;
+
+
 void setup(){
   
   allBuildings = new ArrayList<Building>();
@@ -50,14 +60,14 @@ void setup(){
   //this is the default GUI
   //Rakshana -- when you have your code working, change default
   //screen to STARTGUI
-  state = GameState.PLAYSCREENGUI; 
-  
+  //state = GameState.PLAYSCREENGUI; 
+  state = GameState.STARTGUI;
   createPlayScreen();
   
   //RAKSHANA: I created 2 calls to create your two GUIS, put your code in those calls
   //also, note the GUI names I created above and make sure to use those
   createStartScreen();
-  createLoadScreen();
+  //createLoadScreen();
   
   //RAKSHANA: In your event calls, make sure to switch the state. If the user presses play new
   //game: switch the game state to PLAYSCREENGUI (Code:  state = GameState.PLAYSCREENGUI; )
@@ -77,7 +87,7 @@ void draw() {
     case STARTGUI: 
       startGUI.show();
       playScreenGUI.hide();
-      loadCityGUI.hide();
+      //loadCityGUI.hide();
       break;
       
     
@@ -92,21 +102,21 @@ void draw() {
             displayBuildingImages();
             }
        startGUI.hide();
-       loadCityGUI.hide();
+       //loadCityGUI.hide();
        break;
       
     case LOADCITYGUI:
     
       startGUI.hide();
       playScreenGUI.hide();
-      loadCityGUI.show();
+      //loadCityGUI.show();
       break;
     
     default:
       //Good practice to have a default screen. 
       startGUI.show();
       playScreenGUI.hide();
-      loadCityGUI.hide();
+      //loadCityGUI.hide();
       break;
       
     
@@ -263,12 +273,89 @@ void createPlayScreen(){
 void createStartScreen(){
   
   startGUI = new ControlP5(this);
+  skyline = loadImage("skyline.jpg");
+  castellar = createFont("Castellar", 30);
+  textFont(castellar);
+  
+   // Initializing buttons
+  createNewCity = new Button(390,400,250,40,color(255),"Create New Skyline");
+  loadExistingCity = new Button(390,470,250,40,color(255),"Load Existing Skyline");
+  
+  background(color(25,96,193));
+  
+  pushMatrix();
+  scale(1.2);
+  image(skyline,0,0);
+  popMatrix();
+  
+  stroke(0);
+  fill(255);
+  textSize(30);
+  text("City Skyline", 360,345);
+  
+  // Displays buttons for user to select action
+  createNewCity.display();
+  loadExistingCity.display();
+  
   
 }
 
 void createLoadScreen(){
   
+  // NEED TO CHECK TEXTBOX FUNCTIONALITY - WHEN TYPING IN BOX FOR A SECOND TIME, GOES TO NEXT SCREEN
   loadCityGUI = new ControlP5(this);
+  
+  background(color(25,96,193));
+  skyline = loadImage("skyline.jpg");
+  // Setting up background image
+  pushMatrix();
+  scale(1.2);
+  image(skyline,0,0);
+  popMatrix();
+    
+  stroke(0);
+  fill(255);
+  textSize(30);
+  textFont(castellar);
+  text("City Skyline", 360,345);
+  textSize(20);
+  text("Enter name of previously created city",290,400);
+  
+  arial = createFont("Arial", 12);
+  textFont(arial);
+  
+  loadCityGUI.addTextfield("input")
+   .setPosition(350,415)
+   .setSize(200,40)
+   .setFont(arial)
+   .setFocus(true)
+   .setColor(color(255,0,0))
+  ;
+
+  loadCityGUI.addTextfield("textValue")
+    .setPosition(350,475)
+    .setSize(200,40)
+    .setFont(arial)
+    .setAutoClear(false)
+  ;
+    
+  loadCityGUI.addBang("clear")
+    .setPosition(575,475)
+    .setSize(80,40)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+  ;
+
+  
+   /* 
+   loadCityGUI.addTextfield("default")
+   .setPosition(20,550)
+   .setFont(arial)
+   .setAutoClear(false)
+   ;
+   */
+
+  textFont(arial);
+  
 }
 void controlEvent(ControlEvent theEvent){
   
@@ -346,6 +433,11 @@ void controlEvent(ControlEvent theEvent){
       display_images = false;
     }
   }
+  
+  if(theEvent.isAssignableFrom(Textfield.class)) {
+    println("controlEvent: accessing a string from controller '" + theEvent.getName() + "' : " + theEvent.getStringValue()
+    );
+  }
 }
 
 public void up(){
@@ -389,6 +481,22 @@ void displayAllBuildings() {
 }
 
 void mousePressed() {
+  // Code for selecting which screen to go to
+  // If "Create New City" button is pressed, user is taken to the screen to create a new city
+  if(mouseX > createNewCity.x && mouseX < (createNewCity.x + createNewCity.w) && mouseY > createNewCity.y && mouseY < (createNewCity.y + createNewCity.h)) {
+    println("Create new city!");
+    state = GameState.PLAYSCREENGUI;
+    
+  }
+  
+  // If "Load Existing City" button is pressed, user is taken to the screen to load in an pre-existing city  
+  else if(mouseX > loadExistingCity.x && mouseX < (loadExistingCity.x + loadExistingCity.w) && mouseY > loadExistingCity.y && mouseY < (loadExistingCity.y + loadExistingCity.h)) {
+    println("Load existing city!");
+    state = GameState.LOADCITYGUI;
+    createLoadScreen();
+
+  }
+  
   // Code for clicking to place buildings
   if (placingBuilding) {
     if (mouseX > 0 && mouseX < 800 - newBuilding.buildingWidth) {
@@ -425,4 +533,15 @@ void mousePressed() {
       }
      }
   }
+}
+
+// Functions for text box functionality on "Load Existing City" screen
+public void clear() {
+  loadCityGUI.get(Textfield.class, "textValue").clear();
+}
+
+
+
+public void input (String theText) {
+  println("a textfield event for controller 'input' : "+ theText);
 }
