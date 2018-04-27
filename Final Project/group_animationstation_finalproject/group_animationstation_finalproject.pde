@@ -417,7 +417,9 @@ void mousePressed() {
         if ((mouseX > allBuildings.get(i).x && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth) == true) {
           if (i == currentDeleteBuildingIndex) {
             allBuildings.remove(i);
-            currentDeleteBuildingIndex = allBuildings.size() - 1;
+            if (currentDeleteBuildingIndex > 0) {
+              currentDeleteBuildingIndex = allBuildings.size() - 1;
+            }
           } else {
             currentDeleteBuildingIndex = i;
           }
