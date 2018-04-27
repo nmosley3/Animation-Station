@@ -7,6 +7,25 @@ public enum GameState {
 }
 
 
+// Variables for building //
+int currentBuildingIndex = 1;
+int buildingPadding = 20;
+int currentEditBuildingIndex = 0;
+int currentDeleteBuildingIndex = 0;
+
+ArrayList<Building> allBuildings;
+Building newBuilding;
+
+Boolean placingBuilding = false;
+Boolean editingBuilding = false;
+Boolean deletingBuilding = false;
+
+PImage editingImg;
+PImage deletingImg;
+
+
+// Variables for Building //
+
 GameState state;
 ControlP5 playScreenGUI, startGUI, loadCityGUI;
 
@@ -18,6 +37,12 @@ Boolean display_images = true;
 PFont miniml;
 
 void setup(){
+  
+  allBuildings = new ArrayList<Building>();
+  editingImg = loadImage("editing.png");
+  editingImg.resize(100, 56);
+  deletingImg = loadImage("deleting.png");
+  deletingImg.resize(48, 60);
   
   size(1000,600);
   textFont(createFont("Miniml",15));
@@ -47,9 +72,6 @@ void setup(){
 
 void draw() {
  
-  
-
-  
   switch(state){
     
     case STARTGUI: 
@@ -90,8 +112,15 @@ void draw() {
     
   }
   
-
+  displayAllBuildings();
+  if (editingBuilding && allBuildings.size() > 0) {
+    image(editingImg, allBuildings.get(currentEditBuildingIndex).x + allBuildings.get(currentEditBuildingIndex).buildingWidth / 2 - editingImg.width / 2, 565 - editingImg.height / 2);
+  }
   
+  if (deletingBuilding && allBuildings.size() > 0) {
+    image(deletingImg, allBuildings.get(currentDeleteBuildingIndex).x + allBuildings.get(currentDeleteBuildingIndex).buildingWidth / 2 - deletingImg.width / 2, 565 - deletingImg.height / 2);
+
+  }
   
 }
 
@@ -247,41 +276,39 @@ void controlEvent(ControlEvent theEvent){
   if (theEvent.isFrom(bldgimgs)){
     
     //check which functionality is being pressed
-    if (theEvent.getValue() == 0.0){
+    if (theEvent.getValue() == 0.0) {
       println("Building One Chosen");
-      //Nathan: Put Bldg1 properties here 
-      //maybe a Boolean that allows code to know which top to create
+      currentBuildingIndex = 1;
     }
-    else if (theEvent.getValue() == 1.0){
+    else if (theEvent.getValue() == 1.0) {
       println("Building Two Chosen");
-      //Nathan: Put Bldg2 properties here 
-      //maybe a Boolean that allows code to know which top to create
+      currentBuildingIndex = 2;
     }
-    else {
+    else if (theEvent.getValue() == 2.0) {
       println("Building Three Chosen");
-      //Nathan: Put Bldg3 properties here 
-      //maybe a Boolean that allows code to know which top to create
+      currentBuildingIndex = 3;
     }
     
   }
   else if (theEvent.isFrom(bed)){
-    if (theEvent.getValue() == 0.0){
+    if (theEvent.getValue() == 0.0) {
       println("Build Functionality");
-      //Nathan: Put Build Functionality Here or call what method you need
-      //probably good to put a boolean value here because only clicked
-      //or called once when the button pressed
+      newBuilding = (new Building(650, currentBuildingIndex, 0));
+      placingBuilding = true;
+      editingBuilding = false;
+      deletingBuilding = false;
     }
-    else if (theEvent.getValue() == 1.0){
+    else if (theEvent.getValue() == 1.0) {
       println("Edit Functionality");
-      //Nathan: Put Edit Functionality Here or call what method you need
-      //probably good to put a boolean value here because only clicked
-      //or called once when the button pressed
+      editingBuilding = true;
+      placingBuilding = false;
+      deletingBuilding = false;
     }
-    else {
+    else if (theEvent.getValue() == 2.0) {
       println("Delete Functionality");
-      //Nathan: Put Delete Functionality Here or call what method you need
-      //probably good to put a boolean value here because only clicked
-      //or called once when the button pressed
+      deletingBuilding = true;
+      editingBuilding = false;
+      placingBuilding = false;
     }
     
   }
@@ -323,26 +350,79 @@ void controlEvent(ControlEvent theEvent){
 
 public void up(){
   println("The up arrow is being pressed");
-  //Nathan put increasing height info here
-  //you can put an if statement here to make sure the 
-  //bldg doesn't go past max_height 
+  if (editingBuilding) {
+    allBuildings.get(currentEditBuildingIndex).addBlock(); 
+  } 
 }
 
 public void down(){
   println("The down arrow is being pressed");
-  //Nathan put decreasing height info here
-  //you can put an if statement here to make sure the 
-  //bldg doesn't go below min_height 
+  if (editingBuilding) {
+    allBuildings.get(currentEditBuildingIndex).subtractBlock(); 
+  }
 }
 
 public void right(){
   println("The right arrow is being pressed");
-  //means right arrow is being pressed, not sure what functionality
-  //you want here
+  if (editingBuilding) {
+    allBuildings.get(currentEditBuildingIndex).moveRight();
+  }
 }
 
 public void left(){
   println("The left arrow is being pressed");
-  //means left arrow is being pressed, not sure what functionality
-  //you want here
+  if (editingBuilding) {
+    allBuildings.get(currentEditBuildingIndex).moveLeft();   
+  }
+}
+
+void displayAllBuildings() {
+  if (placingBuilding) {
+    if (mouseX < 800 - newBuilding.buildingWidth) {
+      newBuilding.x = mouseX;
+    }
+    newBuilding.display();
+  }
+  for (int i = 0; i< allBuildings.size(); i++) {
+    allBuildings.get(i).display(); 
+  }
+}
+
+void mousePressed() {
+  // Code for clicking to place buildings
+  if (placingBuilding) {
+    if (mouseX > 0 && mouseX < 800 - newBuilding.buildingWidth) {
+      for (int i = 0; i< allBuildings.size(); i++) {
+        if ((mouseX > allBuildings.get(i).x && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding) == true) {
+          return;
+        }
+      }
+      placingBuilding = false;
+      allBuildings.add(newBuilding);
+      currentEditBuildingIndex = allBuildings.size() - 1;
+    }
+
+  // Code for clicking to select which building is being edited
+  } else if (editingBuilding) {
+    if (mouseX > 0 && mouseX < 800) {
+      for (int i = 0; i< allBuildings.size(); i++) {
+        if ((mouseX > allBuildings.get(i).x && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth) == true) {
+          currentEditBuildingIndex = i;
+        }
+      }
+    }
+  } else if (deletingBuilding) {
+     if (mouseX > 0 && mouseX < 800) {
+      for (int i = 0; i< allBuildings.size(); i++) {
+        if ((mouseX > allBuildings.get(i).x && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth) == true) {
+          if (i == currentDeleteBuildingIndex) {
+            allBuildings.remove(i);
+            currentDeleteBuildingIndex = allBuildings.size() - 1;
+          } else {
+            currentDeleteBuildingIndex = i;
+          }
+        }
+      }
+     }
+  }
 }
