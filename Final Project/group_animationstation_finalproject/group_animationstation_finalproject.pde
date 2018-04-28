@@ -24,28 +24,27 @@ PImage editingImg;
 PImage deletingImg;
 
 
-// Variables for Building //
-
+// Variables for Maddie's GUIs
 GameState state;
 ControlP5 playScreenGUI, startGUI, loadCityGUI;
-
 RadioButton bed, bldgimgs, soundrb, birdrb, stormrb;
 PImage blg, blg2; 
 Group bldgkey, legend;
 Boolean display_images = true;
-
 PFont miniml;
 
-// Variables for GUI's
+// Variables for Rakshana's GUIs
 PImage skyline;
 PFont castellar;
 PFont arial;
 String textValue = "";
-
 Button createNewCity;
 Button loadExistingCity;
 Button mainFromCreate;
 
+//Variables for Birds & Storm
+Bird[] birdflock; 
+Bird testbird;
 
 void setup(){
   
@@ -76,6 +75,8 @@ void setup(){
   //(Code: state = GameState.LOADCITYGUI;) 
   
   
+  //Create Array of Birds
+  testbird = new Bird(100,100);
  
 }
 
@@ -107,6 +108,15 @@ void draw() {
     
        startGUI.hide();
        loadCityGUI.hide();
+       
+       
+       //TRING TO FIX GLITCH WITH BIRD...
+       //testbird.display();
+       ////testbird.move();
+       //testbird.rotateWing1();
+       //testbird.rotateWing2();
+       
+       
        break;
       
     case LOADCITYGUI:
