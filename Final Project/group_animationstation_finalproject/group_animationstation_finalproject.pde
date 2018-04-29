@@ -1,4 +1,18 @@
-import controlP5.*; 
+import controlP5.*;
+
+// Sound functionality
+import processing.sound.*;
+SoundFile main;
+SoundFile rain;
+SoundFile bird;
+
+String path;
+String path2;
+String path3;
+
+int soundCount;
+int rainSoundCount;
+int birdSoundCount;
 
 public enum GameState {
   
@@ -23,6 +37,10 @@ Boolean deletingBuilding = false;
 PImage editingImg;
 PImage deletingImg;
 
+// Booleans for sound
+Boolean mainSound = true;
+Boolean rainSound = false;
+Boolean birdSound = false;
 
 // Variables for Maddie's GUIs
 GameState state;
@@ -53,6 +71,18 @@ void setup(){
   editingImg.resize(100, 56);
   deletingImg = loadImage("deleting.png");
   deletingImg.resize(48, 60);
+  
+  // Loading sound file
+  path = sketchPath("urban_traffic.mp3");
+  main = new SoundFile(this,path);
+  
+  path2 = sketchPath("rain_and_thunder.mp3");
+  rain = new SoundFile(this,path2);
+  
+  path3 = sketchPath("birds_chirping.mp3");
+  bird = new SoundFile(this, path3);
+  
+  
   
   size(1000,600);
   textFont(createFont("Miniml",15));
@@ -95,7 +125,7 @@ void draw() {
     
     case PLAYSCREENGUI:
       textFont(createFont("Miniml",15));
-
+      
       background(98,204,232);
       noStroke();
       fill(98,232,130);
@@ -134,9 +164,9 @@ void draw() {
       fill(255);
       textSize(30);
       textFont(castellar);
-      text("City Skyline", 385,345);
+      text("City Skyscraper", 360,345);
       textSize(20);
-      text("Enter name of previously created city",290,400);
+      text("Enter name of previously created skyline",260,400);
       startGUI.hide();
       playScreenGUI.hide();
       loadCityGUI.show();
@@ -330,7 +360,7 @@ void createStartScreen(){
   stroke(0);
   fill(255);
   textSize(30);
-  text("City Skyline", 385,345);
+  text("City Skyscraper", 360,345);
   
   // Displays buttons for user to select action
   createNewCity.display();
@@ -434,13 +464,51 @@ void controlEvent(ControlEvent theEvent){
     }
     
   }
+  
   else if(theEvent.isFrom(soundrb)){
+    // HOW TO GET SOUND TO PLAY WHEN GAME STARTS & TOGGLE ON/OFF?
+    //soundCount += 1;    
+    
+    /*
+    // Plays sound when sound icon is "on"
+    if (soundCount % 2 == 0) {
+      file.play();
+    }
+    
+    // Stops playing sound when sound icon is "off"
+    else if (soundCount % 2 != 0) {
+      file.stop();
+    }
+    
+    */
+    
+    // Toggles the button based on user selection
+    if (mainSound == true) {
+      mainSound = false;
+    }
+    
+    else if (mainSound == false) {
+      mainSound = true;
+    }
+    
+    // If sound icon is "on", plays sound
+    if (mainSound == true) {
+      // Loading a sound file
+      
+      main.play();
+    }
+    
+    // If sound icon is "off", mutes the sound
+    else if (mainSound == false) {
+      main.stop();
+    }
+    
     
     println("Sound is being pressed");
     //Rakshana: Can't tell which switch it is on, but from here we can basically make a sound boolean
     //the opposite of what it was
-   
     
+  
   }
   
   else if (theEvent.isFrom(birdrb)){
@@ -448,13 +516,76 @@ void controlEvent(ControlEvent theEvent){
     //Rakshana: Can't tell which switch it is on, but here you can switch the sound of bird to on or off
     //even if bird is pressed -- make sure you check to see if sound is muted because that
     //will affect if the bird sound is actually displayed
+    
+    birdSoundCount += 1;    
+    
+    // Plays sound when sound icon is "on"
+    if (birdSoundCount % 2 != 0) {
+      bird.play();
+    }
+    
+    // Stops playing sound when sound icon is "off"
+    else if (birdSoundCount % 2 == 0) {
+      bird.stop();
+     
+    }
+    
+    
   }
+  
+  
   
     else if (theEvent.isFrom(stormrb)){
     println("Storm is being pressed");
+    
+    rainSoundCount += 1;    
+    
+    // Plays sound when sound icon is "on"
+    if (rainSoundCount % 2 != 0) {
+      rain.play();
+    }
+    
+    // Stops playing sound when sound icon is "off"
+    else if (rainSoundCount % 2 == 0) {
+      rain.stop();
+    }
+    
+    
+
     //Rakshana: Can't tell which switch it is on, but here you can switch the sound of storm to on or off
     //even if storm is pressed -- make sure you check to see if sound is muted because that
     //will affect if the storm sound is actually displayed
+     /*
+    if(rainSound == true) {
+      rainSound = false;
+    }
+    
+    else if (rainSound == false) {
+      rainSound = true;
+    }
+    
+   
+    if (mainSound == true && rainSound == true) {
+      rain.play();
+      main.stop(); 
+    }
+    
+    else if (mainSound == true && rainSound == false) {
+      main.play();
+      rain.stop();
+    }
+    
+    else if (mainSound == false && rainSound == true) {
+      main.stop();
+      rain.stop();
+    }
+    
+    else if (mainSound == false && rainSound == false) {
+      main.stop();
+      rain.stop();
+      
+    }
+    */
   }
   else if(theEvent.isGroup()){
     if (theEvent.getGroup() == legend && theEvent.getGroup().isOpen()){

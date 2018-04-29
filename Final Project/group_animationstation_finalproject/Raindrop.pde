@@ -4,7 +4,7 @@ class Raindrop{
   Raindrop(){
     
     rd = loadShape("raindrop.png");
-    rd
+    //rd
   }
   
   void display(){
