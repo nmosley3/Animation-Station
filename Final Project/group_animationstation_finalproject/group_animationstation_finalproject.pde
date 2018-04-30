@@ -438,7 +438,7 @@ void controlEvent(ControlEvent theEvent){
     }
     else if (theEvent.getValue() == 2.0) {
       println("Building Three Chosen");
-      currentBuildingIndex = 3;
+      // currentBuildingIndex = 3;
     }
     
   }
@@ -459,6 +459,10 @@ void controlEvent(ControlEvent theEvent){
     else if (theEvent.getValue() == 2.0) {
       println("Delete Functionality");
       deletingBuilding = true;
+      editingBuilding = false;
+      placingBuilding = false;
+    } else {
+      deletingBuilding = false;
       editingBuilding = false;
       placingBuilding = false;
     }
@@ -668,13 +672,13 @@ void mousePressed() {
   if (placingBuilding) {
     if (mouseX > 0 && mouseX < 800 - newBuilding.buildingWidth) {
       for (int i = 0; i< allBuildings.size(); i++) {
-        if ((mouseX > allBuildings.get(i).x && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding) == true) {
+        if ((mouseX + newBuilding.buildingWidth > allBuildings.get(i).x - buildingPadding && mouseX + newBuilding.buildingWidth < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding) || (mouseX> allBuildings.get(i).x - buildingPadding && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding)) {
           return;
         }
       }
-      placingBuilding = false;
       allBuildings.add(newBuilding);
       currentEditBuildingIndex = allBuildings.size() - 1;
+      newBuilding = (new Building(650, currentBuildingIndex, 0));
     }
 
   // Code for clicking to select which building is being edited

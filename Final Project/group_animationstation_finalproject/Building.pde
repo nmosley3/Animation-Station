@@ -6,6 +6,8 @@ class Building {
   int buildIndex;
   int modifier;
   int maxBlocks;
+  int newPosition;
+  Building currentBuilding;
   
   Building (int x, int buildingType, int numBlocks) {
     this.x = x;
@@ -27,6 +29,12 @@ class Building {
       blockHeight = 5 * modifier;
       topHeight = 19 * modifier;
       this.buildingWidth = 34 * modifier;
+      
+    } else if (buildingType == 2) {
+      baseHeight = 45 * modifier;
+      blockHeight = 5 * modifier;
+      topHeight = 11 * modifier;
+      this.buildingWidth = 20 * modifier;
     }
 
   }
@@ -47,7 +55,12 @@ class Building {
   
   void moveLeft() {
     for (int i = 0; i < allBuildings.size(); i++) {
-      if ((this.x > allBuildings.get(i).x - buildingPadding && this.x < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding) == false) { 
+      if (i == currentEditBuildingIndex) {
+        continue;
+      }
+      newPosition = this.x - 10;
+      currentBuilding = allBuildings.get(i);
+      if ((newPosition < currentBuilding.x + currentBuilding.buildingWidth + buildingPadding && newPosition > currentBuilding.x - buildingPadding) || (newPosition - buildingPadding < 0)) { 
         return;  
       }
     }
@@ -56,11 +69,16 @@ class Building {
   
   void moveRight() {
     for (int i = 0; i < allBuildings.size(); i++) {
-      if ((this.x > allBuildings.get(i).x - buildingPadding && this.x < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding) == false) { 
-        return;  
+      if (i == currentEditBuildingIndex) {
+        continue;
+      }
+      newPosition = this.x + 10;
+      currentBuilding = allBuildings.get(i);
+      if ((newPosition + this.buildingWidth > currentBuilding.x - buildingPadding && newPosition + this.buildingWidth < currentBuilding.x + currentBuilding.buildingWidth + buildingPadding) || (newPosition + this.buildingWidth > 800)) {
+        return;
       }
     }
-    this.x += 5;
+    this.x += 10;
   }
   
   
