@@ -45,6 +45,7 @@ Button mainFromCreate;
 //Variables for Birds & Storm
 Bird[] birdflock; 
 Bird testbird;
+Raindrop rd;
 
 void setup(){
   
@@ -77,6 +78,7 @@ void setup(){
   
   //Create Array of Birds
   testbird = new Bird(100,100);
+  rd = new Raindrop(100,100);
  
 }
 
@@ -110,6 +112,7 @@ void draw() {
        loadCityGUI.hide();
        
        
+       rd.display();
        //TRING TO FIX GLITCH WITH BIRD...
        //testbird.display();
        ////testbird.move();
