@@ -1,25 +1,28 @@
 class Raindrop{
   
   float xPos, yPos; 
-  PShape rd; 
+  PImage rd; 
   
   Raindrop(float xPos, float yPos){
     
     this.xPos = xPos;
     this.yPos = yPos;
     
-    rd = createShape();
-    rd = loadShape("raindrop.svg");
-    rd.setFill(254);
-    rd.scale(0.1);
+    rd = loadImage("raindrop.png");
+    rd.resize(rd.width/8, rd.height/8);
   }
   
   void display(){
     
-    pushMatrix();
-    translate(xPos, yPos);
-    shape(rd);
-    popMatrix();
+    image(rd,xPos,yPos);
+    
+  }
+  
+  void setPosition(float xPos, float yPos){
+    
+    this.xPos = xPos;
+    this.yPos = yPos;
+    
   }
   
 }

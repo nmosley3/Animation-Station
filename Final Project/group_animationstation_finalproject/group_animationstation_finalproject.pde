@@ -63,7 +63,9 @@ Button mainFromCreate;
 //Variables for Birds & Storm
 Bird[] birdflock = new Bird[35]; 
 Boolean showBirds = false; 
-Raindrop rd;
+//Raindrop rd;
+Storm storm; 
+Boolean showStorm = false; 
 
 void setup(){
   
@@ -112,8 +114,9 @@ void setup(){
     
     birdflock[i] = new Bird(int(random(0,100)),int(random(50,150)), int(random(0,80)));
   }
-  //testbird = new Bird(100,100);
-  //rd = new Raindrop(100,100);
+
+  //create a storm 
+  storm = new Storm();
  
 }
 
@@ -150,6 +153,7 @@ void draw() {
        startGUI.hide();
        loadCityGUI.hide();    
        
+       //display birds
        if (showBirds){
          
         for (int i = 0; i < birdflock.length; i++){
@@ -158,6 +162,16 @@ void draw() {
          
          }
        }
+       
+       if (showStorm){
+         
+       //display storm
+       storm.display();
+       storm.move();
+       
+       
+       }
+
        
      
 
@@ -566,7 +580,10 @@ void controlEvent(ControlEvent theEvent){
     else if (theEvent.isFrom(stormrb)){
     println("Storm is being pressed");
     
-    rainSoundCount += 1;    
+    rainSoundCount += 1; 
+    
+    showStorm = !showStorm;
+    storm.setPosition();
     
     // Plays sound when sound icon is "on"
     if (rainSoundCount % 2 != 0) {
