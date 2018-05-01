@@ -61,8 +61,8 @@ Button loadExistingCity;
 Button mainFromCreate;
 
 //Variables for Birds & Storm
-Bird[] birdflock; 
-Bird testbird;
+Bird[] birdflock = new Bird[35]; 
+Boolean showBirds = false; 
 Raindrop rd;
 
 void setup(){
@@ -107,8 +107,13 @@ void setup(){
   
   
   //Create Array of Birds
-  testbird = new Bird(100,100);
-  rd = new Raindrop(100,100);
+  
+  for (int i = 0; i < birdflock.length; i++){
+    
+    birdflock[i] = new Bird(int(random(0,100)),int(random(50,150)), int(random(0,80)));
+  }
+  //testbird = new Bird(100,100);
+  //rd = new Raindrop(100,100);
  
 }
 
@@ -122,6 +127,10 @@ void draw() {
       startGUI.show();
       playScreenGUI.hide();
       loadCityGUI.hide();
+      
+      //testbird.display();
+      //testbird.move();
+      
       break;
       
     
@@ -133,21 +142,26 @@ void draw() {
       fill(98,232,130);
       rect(0,530,1000,70);
       playScreenGUI.show();
-        if (display_images){
-            displayBuildingImages();
-            }
+      if (display_images){
+          displayBuildingImages();
+       }
        
     
        startGUI.hide();
-       loadCityGUI.hide();
+       loadCityGUI.hide();    
        
+       if (showBirds){
+         
+        for (int i = 0; i < birdflock.length; i++){
+          birdflock[i].display();
+          birdflock[i].move();
+         
+         }
+       }
        
-       rd.display();
-       //TRING TO FIX GLITCH WITH BIRD...
-       //testbird.display();
-       ////testbird.move();
-       //testbird.rotateWing1();
-       //testbird.rotateWing2();
+     
+
+
        
        
        break;
@@ -524,7 +538,14 @@ void controlEvent(ControlEvent theEvent){
     //even if bird is pressed -- make sure you check to see if sound is muted because that
     //will affect if the bird sound is actually displayed
     
-    birdSoundCount += 1;    
+    birdSoundCount += 1;   
+    
+    showBirds = !showBirds; 
+    for (int i = 0; i < birdflock.length; i++){
+    
+    birdflock[i].setPosition(int(random(0,100)),int(random(50,150)),int(random(0,80)));
+  }
+
     
     // Plays sound when sound icon is "on"
     if (birdSoundCount % 2 != 0) {

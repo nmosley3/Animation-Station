@@ -14,6 +14,7 @@ class Storm{
     
     cloud = loadShape("cloud.svg");
     
+    
     storm.addChild(cloud);
     //How do we attach the rain clouds to this??
     

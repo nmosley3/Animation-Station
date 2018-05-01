@@ -10,6 +10,7 @@ class Raindrop{
     
     rd = createShape();
     rd = loadShape("raindrop.svg");
+    rd.setFill(254);
     rd.scale(0.1);
   }
   

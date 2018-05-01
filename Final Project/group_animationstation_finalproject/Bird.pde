@@ -1,7 +1,7 @@
 class Bird{
   
   
-  float xPosition, yPosition; 
+  float xPosition, yPosition, degree; 
   int bodyx = 3;
   int bodyy = 3;
   color c = color(25,26,33);
@@ -14,80 +14,84 @@ class Bird{
   int directionWing1 = -1;
   int directionWing2 = 1; 
   
-  Bird(float xPosition, float yPosition){
+  Bird(float xPosition, float yPosition, int degree){
     
     this.xPosition = xPosition;
     this.yPosition = yPosition; 
+    this.degree = degree;
+    this.wing1Counter = degree;
+    this.wing2Counter = degree; 
     
     bird = createShape(GROUP);
     ellipseMode(CENTER);
-    body = createShape(ELLIPSE, xPosition, yPosition, bodyx, bodyy);
+    body = createShape(ELLIPSE, 0, 0, bodyx, bodyy);
     body.setFill(c);
     body.setStroke(c);
-    wing1 = createShape(LINE,xPosition,yPosition, xPosition-4, yPosition-7);
+    wing1 = createShape(LINE,0,0, -4, -7);
     wing1.setStroke(c);
-    wing2 = createShape(LINE,xPosition, yPosition, xPosition+4,yPosition-7);
+    wing2 = createShape(LINE,0, 0, 4, -7);
     wing2.setStroke(c);
     
     bird.addChild(body);
     bird.addChild(wing1);
     bird.addChild(wing2);
-     
+    
+    pushMatrix();
+    wing1.rotate(radians(-wing1Counter));
+    popMatrix();
+    
+    pushMatrix();
+    wing2.rotate(radians(wing2Counter));
+    popMatrix(); 
+    
   }
   
   void display(){
     pushMatrix();
     translate(this.xPosition,this.yPosition);
-    shape(bird);
+    shape(body);
+    
+    //wing1
+    if (wing1Counter < 80) {
+    pushMatrix();
+    wing1.rotate(radians(directionWing1));
+    shape(wing1);
+    popMatrix();
+    
+    wing1Counter += 1; 
+    
+    }
+    else{
+      directionWing1 = directionWing1 * -1;
+      wing1Counter = 0;
+    }
+    
+    //wing2
+    if (wing2Counter < 80) {
+    pushMatrix();
+    wing2.rotate(radians(directionWing2));
+    shape(wing2);
+    popMatrix();
+    
+    wing2Counter += 1; 
+    
+    }
+    else{
+      directionWing2 = directionWing2 * -1;
+      wing2Counter = 0;
+    }
+    
     popMatrix();
   }
   
-  void rotateWing1(){
-    
-    if (wing1Counter <=  rotateMax){
-      pushMatrix();
-      wing1.translate(xPosition,yPosition);
-      wing1.rotate(radians(directionWing1));
-      wing1.translate(-xPosition,-yPosition);
-      
-      popMatrix();  
-      wing1Counter += 1; 
-    }
-    else{
-      wing1Counter = 0;
-      directionWing1 = directionWing1 * -1;
-      
-    }
-    
-  }
-  
-  void rotateWing2() {
-    
-        
-    if (wing2Counter <=  rotateMax){
-      pushMatrix();
-      wing2.translate(xPosition,yPosition);
-      wing2.rotate(radians(directionWing2));
-      wing2.translate(-xPosition,-yPosition);
-      
-      popMatrix();  
-      wing2Counter += 1; 
-    }
-    else{
-      wing2Counter = 0;
-      directionWing2 = directionWing2 * -1;
-      
-    }
-  }
+ 
   
   void move(){
     
     if (xPosition < 800){
       
       xPosition += 1; 
-      //pushMatrix();
-      //bird.translate(xPosition,yPosition);
-      //popMatrix();
+
       
       
     }
@@ -95,5 +99,16 @@ class Bird{
       xPosition= -5;
     }
     
+    
+  }
+  
+  
+  void setPosition(float xPosition, float yPosition, int degree){
+    
+    this.xPosition = xPosition;
+    this.yPosition = yPosition; 
+    this.degree = degree;
+    this.wing1Counter = degree;
+    this.wing2Counter = degree; 
   }
 }
