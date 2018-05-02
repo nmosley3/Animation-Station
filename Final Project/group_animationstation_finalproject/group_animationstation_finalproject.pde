@@ -140,9 +140,9 @@ void draw() {
     case PLAYSCREENGUI:
       textFont(createFont("Miniml",15));
       
-      background(98,204,232);
+      background(52,56,129);
       noStroke();
-      fill(98,232,130);
+      fill(39,39,49);
       rect(0,530,1000,70);
       playScreenGUI.show();
       if (display_images){
