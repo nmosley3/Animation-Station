@@ -61,7 +61,7 @@ Button loadExistingCity;
 Button mainFromCreate;
 
 //Variables for Birds & Storm
-Bird[] birdflock = new Bird[35]; 
+Bird[] birdflock = new Bird[10]; 
 Boolean showBirds = false; 
 //Raindrop rd;
 Storm storm; 
