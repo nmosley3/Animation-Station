@@ -14,8 +14,6 @@ int soundCount;
 int rainSoundCount;
 int birdSoundCount;
 
-SaveFile newSave;
-
 public enum GameState {
   
   STARTGUI, PLAYSCREENGUI, LOADCITYGUI
@@ -63,11 +61,8 @@ Button loadExistingCity;
 Button mainFromCreate;
 
 //Variables for Birds & Storm
-Bird[] birdflock = new Bird[10]; 
-Boolean showBirds = false; 
-//Raindrop rd;
-Storm storm; 
-Boolean showStorm = false; 
+Bird[] birdflock; 
+Bird testbird;
 
 void setup(){
   
@@ -111,14 +106,7 @@ void setup(){
   
   
   //Create Array of Birds
-  
-  for (int i = 0; i < birdflock.length; i++){
-    
-    birdflock[i] = new Bird(int(random(0,100)),int(random(50,150)), int(random(0,80)));
-  }
-
-  //create a storm 
-  storm = new Storm();
+  testbird = new Bird(100,100);
  
 }
 
@@ -132,52 +120,31 @@ void draw() {
       startGUI.show();
       playScreenGUI.hide();
       loadCityGUI.hide();
-      
-      //testbird.display();
-      //testbird.move();
-      
       break;
       
     
     case PLAYSCREENGUI:
       textFont(createFont("Miniml",15));
       
-      background(52,56,129);
+      background(98,204,232);
       noStroke();
-      fill(39,39,49);
+      fill(98,232,130);
       rect(0,530,1000,70);
       playScreenGUI.show();
-      if (display_images){
-          displayBuildingImages();
-       }
+        if (display_images){
+            displayBuildingImages();
+            }
        
     
        startGUI.hide();
-       loadCityGUI.hide();    
-       
-       //display birds
-       if (showBirds){
-         
-        for (int i = 0; i < birdflock.length; i++){
-          birdflock[i].display();
-          birdflock[i].move();
-         
-         }
-       }
-       
-       if (showStorm){
-         
-       //display storm
-       storm.display();
-       storm.move();
+       loadCityGUI.hide();
        
        
-       }
-
-       
-     
-
-
+       //TRING TO FIX GLITCH WITH BIRD...
+       //testbird.display();
+       ////testbird.move();
+       //testbird.rotateWing1();
+       //testbird.rotateWing2();
        
        
        break;
@@ -367,9 +334,9 @@ void createPlayScreen(){
      .setSize(150,40)
      ;
      
-   playScreenGUI.addButton("Save File")
+   playScreenGUI.addButton("Save City")
      .setValue(10)
-     .setPosition(820, 328)
+     .setPosition(820, 332)
      .setSize(150,40)
      ;
   
@@ -560,14 +527,7 @@ void controlEvent(ControlEvent theEvent){
     //even if bird is pressed -- make sure you check to see if sound is muted because that
     //will affect if the bird sound is actually displayed
     
-    birdSoundCount += 1;   
-    
-    showBirds = !showBirds; 
-    for (int i = 0; i < birdflock.length; i++){
-    
-    birdflock[i].setPosition(int(random(0,100)),int(random(50,150)),int(random(0,80)));
-  }
-
+    birdSoundCount += 1;    
     
     // Plays sound when sound icon is "on"
     if (birdSoundCount % 2 != 0) {
@@ -588,10 +548,7 @@ void controlEvent(ControlEvent theEvent){
     else if (theEvent.isFrom(stormrb)){
     println("Storm is being pressed");
     
-    rainSoundCount += 1; 
-    
-    showStorm = !showStorm;
-    storm.setPosition();
+    rainSoundCount += 1;    
     
     // Plays sound when sound icon is "on"
     if (rainSoundCount % 2 != 0) {
@@ -699,13 +656,6 @@ void displayAllBuildings() {
   }
 }
 
-void saveFile() {
-  
-  newSave = new SaveFile("testFile01");
-  newSave.outputSaveFile();
-  
-}
-
 void mousePressed() {
   // Code for selecting which screen to go to
   // If "Create New City" button is pressed, user is taken to the screen to create a new city
@@ -746,6 +696,7 @@ void mousePressed() {
         }
       }
     }
+  // Code for clicking to select which building is being deleted
   } else if (deletingBuilding) {
      if (mouseX > 0 && mouseX < 800) {
       for (int i = 0; i< allBuildings.size(); i++) {
@@ -762,12 +713,6 @@ void mousePressed() {
       }
      }
   }
-  
-  // if "Save File" button is pressed
-  if (mouseX > 830 && mouseX < 980 && mouseY > 328 && mouseY < 368) {
-    saveFile();
-  }
-  
 }
 
 // Functions for text box functionality on "Load Existing City" screen
