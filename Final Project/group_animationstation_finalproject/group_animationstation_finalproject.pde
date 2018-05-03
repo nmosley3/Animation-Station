@@ -15,6 +15,8 @@ int rainSoundCount;
 int birdSoundCount;
 
 SaveFile newSave;
+String saveCityName;
+
 
 public enum GameState {
   
@@ -35,6 +37,7 @@ Building newBuilding;
 Boolean placingBuilding = false;
 Boolean editingBuilding = false;
 Boolean deletingBuilding = false;
+Boolean savingCity = false;
 
 PImage editingImg;
 PImage deletingImg;
@@ -47,6 +50,10 @@ Boolean birdSound = false;
 // Variables for Maddie's GUIs
 GameState state;
 ControlP5 playScreenGUI, startGUI, loadCityGUI;
+
+controlP5.Textfield cityNameInput;
+controlP5.Button saveCityButton;
+
 RadioButton bed, bldgimgs, soundrb, birdrb, stormrb;
 PImage blg, blg2; 
 Group bldgkey, legend;
@@ -173,12 +180,6 @@ void draw() {
        
        
        }
-
-       
-     
-
-
-       
        
        break;
       
@@ -249,6 +250,10 @@ void createPlayScreen(){
   
   playScreenGUI = new ControlP5(this);
   
+  cityNameInput = playScreenGUI.addTextfield("Enter the name of your city").setPosition(400, 250).setSize(200, 30).setAutoClear(false);
+  cityNameInput.hide();
+  saveCityButton = playScreenGUI.addButton("Save").setPosition(470, 300).setSize(60, 30);
+  saveCityButton.hide();
   
 
   //create my desired group
@@ -415,10 +420,6 @@ void createLoadScreen(){
   
   arial = createFont("Arial", 12);
   textFont(arial);
-  
-  
- 
- 
   
   
   loadCityGUI.addTextfield("input")
@@ -688,7 +689,7 @@ public void left(){
 }
 
 void displayAllBuildings() {
-  if (placingBuilding) {
+  if (placingBuilding && !savingCity) {
     if (mouseX < 800 - newBuilding.buildingWidth) {
       newBuilding.x = mouseX;
     }
@@ -701,8 +702,24 @@ void displayAllBuildings() {
 
 void saveFile() {
   
-  newSave = new SaveFile("testFile01");
-  newSave.outputSaveFile();
+  cityNameInput.show();
+  saveCityButton.show();
+  savingCity = true;
+  
+}
+
+void Save() {
+ 
+  saveCityName = cityNameInput.getText();
+  File f = new File(saveCityName + ".txt");
+  if (f.exists()) {
+    print("That city already exists, would you like to overwrite it?");
+  } else {
+    newSave = new SaveFile(saveCityName + ".txt");
+    newSave.outputSaveFile();
+    print("city successfully saved");
+    savingCity = false;
+  }
   
 }
 
@@ -725,7 +742,7 @@ void mousePressed() {
   
  
   // Code for clicking to place buildings
-  if (placingBuilding) {
+  if (placingBuilding && !savingCity) {
     if (mouseX > 0 && mouseX < 800 - newBuilding.buildingWidth) {
       for (int i = 0; i< allBuildings.size(); i++) {
         if ((mouseX + newBuilding.buildingWidth > allBuildings.get(i).x - buildingPadding && mouseX + newBuilding.buildingWidth < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding) || (mouseX> allBuildings.get(i).x - buildingPadding && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth + buildingPadding)) {
@@ -738,7 +755,7 @@ void mousePressed() {
     }
 
   // Code for clicking to select which building is being edited
-  } else if (editingBuilding) {
+  } else if (editingBuilding && !savingCity) {
     if (mouseX > 0 && mouseX < 800) {
       for (int i = 0; i< allBuildings.size(); i++) {
         if ((mouseX > allBuildings.get(i).x && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth) == true) {
@@ -746,7 +763,7 @@ void mousePressed() {
         }
       }
     }
-  } else if (deletingBuilding) {
+  } else if (deletingBuilding && !savingCity) {
      if (mouseX > 0 && mouseX < 800) {
       for (int i = 0; i< allBuildings.size(); i++) {
         if ((mouseX > allBuildings.get(i).x && mouseX < allBuildings.get(i).x + allBuildings.get(i).buildingWidth) == true) {
