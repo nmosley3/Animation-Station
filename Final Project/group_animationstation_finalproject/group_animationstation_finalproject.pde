@@ -187,7 +187,7 @@ void draw() {
     
       background(color(25,96,193));
   
-      skyline = loadImage("skyline.jpg");
+      skyline = loadImage("skyline.png");
       // Setting up background image
       pushMatrix();
       scale(1.2);
@@ -200,7 +200,7 @@ void draw() {
       textFont(castellar);
       text("City Skyscraper", 360,345);
       textSize(20);
-      text("Enter name of previously created skyline",260,400);
+      text("Enter name of previously created skyline",240,400);
       startGUI.hide();
       playScreenGUI.hide();
       loadCityGUI.show();
@@ -386,7 +386,8 @@ void createPlayScreen(){
 void createStartScreen(){
   
   startGUI = new ControlP5(this);
-  skyline = loadImage("skyline.jpg");
+  skyline = loadImage("skyline.png");
+  skyline.resize(840, 300);
   castellar = createFont("Castellar", 30);
   textFont(castellar);
   
@@ -394,11 +395,11 @@ void createStartScreen(){
   createNewCity = new Button(390,400,250,40,color(255),"Create New Skyline");
   loadExistingCity = new Button(390,470,250,40,color(255),"Load Existing Skyline");
   
-  background(color(25,96,193));
+  background(color(52,56,129));
   
   pushMatrix();
   scale(1.2);
-  image(skyline,0,0);
+  image(skyline,0,200);
   popMatrix();
   
   stroke(0);
@@ -422,14 +423,21 @@ void createLoadScreen(){
   textFont(arial);
   
   
-  loadCityGUI.addTextfield("input")
+  loadCityGUI.addTextfield(" ")
    .setPosition(350,415)
-   .setSize(200,40)
+   .setSize(300, 30)
    .setFont(arial)
    .setFocus(true)
-   .setColor(color(255,0,0))
+   .setColor(color(255))
   ;
+  
+  loadCityGUI.addButton("Load")
+    .setPosition(450, 450)
+    .setSize(100, 35)
+    ;
+  
 
+  /* are these necessary?
   loadCityGUI.addTextfield("textValue")
     .setPosition(350,475)
     .setSize(200,40)
@@ -444,13 +452,12 @@ void createLoadScreen(){
   ;
 
   
-    
    loadCityGUI.addTextfield("default")
    .setPosition(20,550)
    .setFont(arial)
    .setAutoClear(false)
    ;
-   
+   */
 
   textFont(arial);
   
@@ -711,7 +718,7 @@ void saveFile() {
 void Save() {
  
   saveCityName = cityNameInput.getText();
-  File f = new File(saveCityName + ".txt");
+  File f = new File(dataPath(saveCityName + ".txt"));
   if (f.exists()) {
     print("That city already exists, would you like to overwrite it?");
   } else {
