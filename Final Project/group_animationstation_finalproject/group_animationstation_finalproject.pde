@@ -139,9 +139,9 @@ void draw() {
   switch(state){
     
     case STARTGUI: 
-      startGUI.show();
       playScreenGUI.hide();
       loadCityGUI.hide();
+      startGUI.show();
       
       //testbird.display();
       //testbird.move();
@@ -151,6 +151,10 @@ void draw() {
     
     case PLAYSCREENGUI:
       textFont(createFont("Miniml",15));
+      
+      if (playScreenMenuButton.isPressed()) {
+        mainMenu();
+      }
       
       background(52,56,129);
       noStroke();
@@ -189,6 +193,10 @@ void draw() {
     case LOADCITYGUI:
     
       background(color(25,96,193));
+      
+      if (loadScreenMenuButton.isPressed()) {
+        mainMenu();
+      }
   
       skyline = loadImage("skyline.png");
       skyline.resize(840, 300);
@@ -369,7 +377,7 @@ void createPlayScreen(){
                  ;
                  
    // Button to go back to main menu              
-   playScreenMenuButton = playScreenGUI.addButton("Menu")
+   playScreenMenuButton = playScreenGUI.addButton("Main Menu")
      .setValue(10)
      .setPosition(820,30)
      .setSize(150,40)
@@ -422,6 +430,7 @@ void createLoadScreen(){
   // NEED TO CHECK TEXTBOX FUNCTIONALITY - WHEN TYPING IN BOX FOR A SECOND TIME, GOES TO NEXT SCREEN
   loadCityGUI = new ControlP5(this);
   
+  
   skyline = loadImage("skyline.png");
   skyline.resize(840, 300);
   
@@ -468,12 +477,12 @@ void createLoadScreen(){
   textFont(arial);
   
   // Button to go back to main menu              
-   loadScreenMenuButton = loadCityGUI.addButton("Menu")
+   loadScreenMenuButton = loadCityGUI.addButton("Main Menu")
      .setValue(10)
      .setPosition(820,30)
      .setSize(150,40)
      ;
-  
+     
 }
 void controlEvent(ControlEvent theEvent){
   
@@ -722,7 +731,6 @@ void saveFile() {
 }
 
 void Save() {
- 
   saveCityName = cityNameInput.getText();
   saveFile = new File(sketchPath(saveCityName + ".txt"));
   if (saveFile.exists()) {
@@ -755,7 +763,7 @@ void Load() {
   }  
 }
 
-void Menu() {
+void mainMenu() {
   println("menu() function called");
   state = GameState.STARTGUI;
   currentDeleteBuildingIndex = 0;
@@ -822,9 +830,13 @@ void mousePressed() {
   }
   
   // if "Save File" button is pressed
-  if (mouseX > 830 && mouseX < 980 && mouseY > 328 && mouseY < 368) {
+  if (mouseX > 830 && mouseX < 980 && mouseY > 328 && mouseY < 368 && state == GameState.PLAYSCREENGUI) {
     saveFile();
   }
+  
+  //if (state == GameState.PLAYSCREENGUI && mouseX > playScreenMenuButton.x && mouseX < (playScreenMenuButton.x + playScreenMenuButton.w) && mouseY > playScreenMenuButton.y && mouseY < (playScreenMenuButton.y + playScreenMenuButton.h)) {
+    //mainMenu(); 
+  //}
   
 }
 
