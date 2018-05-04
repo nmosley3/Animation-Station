@@ -70,7 +70,7 @@ Button loadExistingCity;
 Button mainFromCreate;
 
 //Variables for Birds & Storm
-Bird[] birdflock = new Bird[10]; 
+Bird[] birdflock = new Bird[15]; 
 Boolean showBirds = false; 
 //Raindrop rd;
 Storm storm; 
@@ -121,7 +121,7 @@ void setup(){
   
   for (int i = 0; i < birdflock.length; i++){
     
-    birdflock[i] = new Bird(int(random(0,100)),int(random(50,150)), int(random(0,80)));
+    birdflock[i] = new Bird(int(random(0,100)),int(random(50,150)), int(random(1,80)));
   }
 
   //create a storm 
@@ -154,9 +154,9 @@ void draw() {
       fill(39,39,49);
       rect(0,530,1000,70);
       playScreenGUI.show();
-      if (display_images){
-          displayBuildingImages();
-       }
+      //if (display_images){
+      //    displayBuildingImages();
+      // }
        
     
        startGUI.hide();
