@@ -66,11 +66,11 @@ PFont miniml;
 // Variables for Rakshana's GUIs
 PImage skyline;
 PFont castellar;
+PFont magneto;
 PFont arial;
 String textValue = "";
 Button createNewCity;
 Button loadExistingCity;
-Button mainFromCreate;
 
 //Variables for Birds & Storm
 Bird[] birdflock = new Bird[15]; 
@@ -135,11 +135,17 @@ void draw() {
       
       skyline.resize(840, 300);
       castellar = createFont("Castellar", 30);
-      textFont(castellar);
+      magneto = createFont("Magneto Bold", 30);
+      textFont(magneto);
+      //textFont(castellar);
+
   
    
       //background(color(52,56,129));
       background(color(75,79,157));
+      //background(color(44,41,44));
+      //background(color(14,28,100));
+
   
       pushMatrix();
       scale(1.2);
@@ -148,10 +154,11 @@ void draw() {
   
       stroke(0);
       fill(255);
-      textSize(50);
-      text("City Skyscraper", 270,120);
+      textSize(60);
+      text("City Skyscraper", 240,90);
   
       // Displays buttons for user to select action
+      textFont(castellar);
       createNewCity.display();
       loadExistingCity.display();
       
@@ -209,8 +216,9 @@ void draw() {
       
     case LOADCITYGUI:
     
-      background(color(25,96,193));
-  
+      //background(color(25,96,193));
+      background(color(75,79,157));
+
       skyline.resize(840, 300);
       // Setting up background image
       pushMatrix();
@@ -220,11 +228,12 @@ void draw() {
         
       stroke(0);
       fill(255);
+      textFont(magneto);
+      textSize(60);
+      text("City Skyscraper", 240,90);
       textFont(castellar);
-      textSize(50);
-      text("City Skyscraper", 270,120);
-      textSize(20);
-      text("Enter name of previously created skyline",240,200);
+      textSize(15);
+      text("Enter name of previously created skyline",300,140);
       startGUI.hide();
       playScreenGUI.hide();
       loadCityGUI.show();
@@ -400,16 +409,19 @@ void createPlayScreen(){
 void createStartScreen(){
   
   startGUI = new ControlP5(this);
-  skyline = loadImage("skyline.png");
+  //skyline = loadImage("skyline.png");
+  skyline = loadImage("city.jpg");
+
   skyline.resize(840, 300);
   castellar = createFont("Castellar", 30);
   textFont(castellar);
   
    // Initializing buttons
-  createNewCity = new Button(390,180,250,40,color(255),"Create New Skyline");
-  loadExistingCity = new Button(390,250,250,40,color(255),"Load Existing Skyline");
+  createNewCity = new Button(380,120,250,40,color(255),"Create New Skyline");
+  loadExistingCity = new Button(380,180,250,40,color(255),"Load Existing Skyline");
   
-  background(color(52,56,129));
+  //background(color(52,56,129));
+  background(color(219,181,181));
   
   pushMatrix();
   scale(1.2);
@@ -440,7 +452,7 @@ void createLoadScreen(){
   
   
   loadCityGUI.addTextfield(" ")
-   .setPosition(350,220)
+   .setPosition(350,150)
    .setSize(300, 40)
    .setFont(arial)
    .setFocus(true)
@@ -448,7 +460,7 @@ void createLoadScreen(){
   ;
   
   loadCityGUI.addButton("Load")
-    .setPosition(450, 280)
+    .setPosition(450, 200)
     .setSize(100, 35)
     ;
   
@@ -741,6 +753,13 @@ void mousePressed() {
     println("Load existing city!");
     state = GameState.LOADCITYGUI;
 
+  }
+  
+  if (keyPressed == true && (key == 'm' || key == 'M')) {
+    println("Sound is muted");
+    main.stop();
+    bird.stop();
+    rain.stop();
   }
   
  
