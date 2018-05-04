@@ -15,7 +15,10 @@ int rainSoundCount;
 int birdSoundCount;
 
 SaveFile newSave;
-String saveCityName;
+String saveCityName, loadCityName;
+String[] buildingsLoaded, buildingData;
+
+File loadFile, saveFile;
 
 
 public enum GameState {
@@ -52,7 +55,7 @@ GameState state;
 ControlP5 playScreenGUI, startGUI, loadCityGUI;
 
 controlP5.Textfield cityNameInput;
-controlP5.Button saveCityButton;
+controlP5.Button saveCityButton, playScreenMenuButton, loadScreenMenuButton;
 
 RadioButton bed, bldgimgs, soundrb, birdrb, stormrb;
 PImage blg, blg2; 
@@ -188,10 +191,11 @@ void draw() {
       background(color(25,96,193));
   
       skyline = loadImage("skyline.png");
+      skyline.resize(840, 300);
       // Setting up background image
       pushMatrix();
       scale(1.2);
-      image(skyline,0,0);
+      image(skyline, 0, 200);
       popMatrix();
         
       stroke(0);
@@ -246,7 +250,6 @@ void displayBuildingImages(){
 }
 
 void createPlayScreen(){
-  
   
   playScreenGUI = new ControlP5(this);
   
@@ -366,7 +369,7 @@ void createPlayScreen(){
                  ;
                  
    // Button to go back to main menu              
-   playScreenGUI.addButton("Menu")
+   playScreenMenuButton = playScreenGUI.addButton("Menu")
      .setValue(10)
      .setPosition(820,30)
      .setSize(150,40)
@@ -419,6 +422,9 @@ void createLoadScreen(){
   // NEED TO CHECK TEXTBOX FUNCTIONALITY - WHEN TYPING IN BOX FOR A SECOND TIME, GOES TO NEXT SCREEN
   loadCityGUI = new ControlP5(this);
   
+  skyline = loadImage("skyline.png");
+  skyline.resize(840, 300);
+  
   arial = createFont("Arial", 12);
   textFont(arial);
   
@@ -462,7 +468,7 @@ void createLoadScreen(){
   textFont(arial);
   
   // Button to go back to main menu              
-   loadCityGUI.addButton("Menu")
+   loadScreenMenuButton = loadCityGUI.addButton("Menu")
      .setValue(10)
      .setPosition(820,30)
      .setSize(150,40)
@@ -718,16 +724,42 @@ void saveFile() {
 void Save() {
  
   saveCityName = cityNameInput.getText();
-  File f = new File(dataPath(saveCityName + ".txt"));
-  if (f.exists()) {
-    print("That city already exists, would you like to overwrite it?");
+  saveFile = new File(sketchPath(saveCityName + ".txt"));
+  if (saveFile.exists()) {
+    println("That city already exists, would you like to overwrite it?");
   } else {
-    newSave = new SaveFile(saveCityName + ".txt");
+    newSave = new SaveFile(saveCityName);
     newSave.outputSaveFile();
-    print("city successfully saved");
+    println("city successfully saved");
     savingCity = false;
   }
   
+}
+
+void Load() {
+  
+  loadCityName = loadCityGUI.get(Textfield.class, " ").getText();
+  loadFile = new File(sketchPath(loadCityName + ".txt"));
+  if (!loadFile.exists()) {
+    println("That file does not exist!");
+  } else {
+  String [] buildingsLoaded = loadStrings(loadCityName + ".txt");
+  
+  allBuildings.clear();
+  for (int i = 0; i < buildingsLoaded.length; i ++) {
+    buildingData = buildingsLoaded[i].split(", ");
+    print(buildingData[1]);
+    allBuildings.add(new Building(int(buildingData[0]), int(buildingData[1]), int(buildingData[2])));
+  }
+  state = GameState.PLAYSCREENGUI;
+  }  
+}
+
+void Menu() {
+  println("menu() function called");
+  state = GameState.STARTGUI;
+  currentDeleteBuildingIndex = 0;
+  currentEditBuildingIndex = 0;
 }
 
 void mousePressed() {
@@ -757,6 +789,7 @@ void mousePressed() {
         }
       }
       allBuildings.add(newBuilding);
+      currentDeleteBuildingIndex = allBuildings.size() - 1;
       currentEditBuildingIndex = allBuildings.size() - 1;
       newBuilding = (new Building(650, currentBuildingIndex, 0));
     }
@@ -778,6 +811,7 @@ void mousePressed() {
             allBuildings.remove(i);
             if (currentDeleteBuildingIndex > 0) {
               currentDeleteBuildingIndex = allBuildings.size() - 1;
+              currentEditBuildingIndex = allBuildings.size() - 1;
             }
           } else {
             currentDeleteBuildingIndex = i;
@@ -794,6 +828,20 @@ void mousePressed() {
   
 }
 
+void keyPressed() {
+  if (key == CODED && editingBuilding) {
+    if (keyCode == UP) {
+      up();
+    } else if (keyCode == LEFT) {
+      left(); 
+    } else if (keyCode == DOWN) {
+      down(); 
+    } else if (keyCode == RIGHT) {
+      right(); 
+    }
+  }
+}
+
 // Functions for text box functionality on "Load Existing City" screen
 public void clear() {
   loadCityGUI.get(Textfield.class, "textValue").clear();
@@ -803,10 +851,4 @@ public void clear() {
 
 public void input (String theText) {
   println("a textfield event for controller 'input' : "+ theText);
-}
-
-public void Menu (int theValue) {
-  println("Go back to main menu");
-  //state = GameState.STARTGUI;
-  
 }

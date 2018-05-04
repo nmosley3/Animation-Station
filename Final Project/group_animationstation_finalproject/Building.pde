@@ -11,8 +11,7 @@ class Building {
   
   Building (int x, int buildingType, int numBlocks) {
     this.x = x;
-    this.buildingType = buildingType;
-    this.numBlocks = numBlocks;
+    this.buildingType = buildingType;     this.numBlocks = numBlocks;
     this.modifier = 3;
     this.maxBlocks = 15;
     
