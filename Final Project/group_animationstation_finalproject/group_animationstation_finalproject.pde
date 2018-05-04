@@ -208,7 +208,6 @@ void draw() {
         mainMenu();
       }
   
-      skyline = loadImage("skyline.png");
       skyline.resize(840, 300);
       // Setting up background image
       pushMatrix();
@@ -440,8 +439,6 @@ void createLoadScreen(){
   // NEED TO CHECK TEXTBOX FUNCTIONALITY - WHEN TYPING IN BOX FOR A SECOND TIME, GOES TO NEXT SCREEN
   loadCityGUI = new ControlP5(this);
   
-  
-  skyline = loadImage("skyline.png");
   skyline.resize(840, 300);
   
   arial = createFont("Arial", 12);
