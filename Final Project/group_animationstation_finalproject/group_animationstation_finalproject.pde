@@ -164,10 +164,6 @@ void draw() {
     case PLAYSCREENGUI:
       textFont(createFont("Miniml",15));
       
-      if (playScreenMenuButton.isPressed()) {
-        mainMenu();
-      }
-      
       background(52,56,129);
       noStroke();
       fill(39,39,49);
@@ -205,10 +201,6 @@ void draw() {
     case LOADCITYGUI:
     
       background(color(25,96,193));
-      
-      if (loadScreenMenuButton.isPressed()) {
-        mainMenu();
-      }
   
       skyline.resize(840, 300);
       // Setting up background image
@@ -797,9 +789,9 @@ void mousePressed() {
     saveFile();
   }
   
-  //if (state == GameState.PLAYSCREENGUI && mouseX > playScreenMenuButton.x && mouseX < (playScreenMenuButton.x + playScreenMenuButton.w) && mouseY > playScreenMenuButton.y && mouseY < (playScreenMenuButton.y + playScreenMenuButton.h)) {
-    //mainMenu(); 
-  //}
+  if ((state == GameState.PLAYSCREENGUI || state == GameState.LOADCITYGUI) && mouseX > 820 && mouseX < (820 + 150) && mouseY > 30 && mouseY < (30 + 40)) {
+    mainMenu(); 
+  }
   
 }
 
