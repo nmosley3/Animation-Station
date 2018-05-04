@@ -852,12 +852,11 @@ public void clear() {
 public void input (String theText) {
   println("a textfield event for controller 'input' : "+ theText);
 }
-<<<<<<< HEAD
-=======
 
+/*
 public void Menu (int theValue) {
   println("Go back to main menu");
   //state = GameState.STARTGUI;
   
 }
->>>>>>> 34fbff04019e025312696671158c5037cde57455
+*/
