@@ -98,26 +98,15 @@ void setup(){
   bird = new SoundFile(this, path3);
   
   
-  
   size(1000,600);
   textFont(createFont("Miniml",15));
   
-  //this is the default GUI
-  //Rakshana -- when you have your code working, change default
-  //screen to STARTGUI
-  //state = GameState.PLAYSCREENGUI; 
   state = GameState.STARTGUI;
   createPlayScreen();
   
-  //RAKSHANA: I created 2 calls to create your two GUIS, put your code in those calls
-  //also, note the GUI names I created above and make sure to use those
   createStartScreen();
   createLoadScreen();
   
-  //RAKSHANA: In your event calls, make sure to switch the state. If the user presses play new
-  //game: switch the game state to PLAYSCREENGUI (Code:  state = GameState.PLAYSCREENGUI; )
-  //If the user presses load existing, switch the game state to LOADCITYGUI 
-  //(Code: state = GameState.LOADCITYGUI;) 
   
   
   //Create Array of Birds
@@ -138,10 +127,31 @@ void draw() {
  
   switch(state){
     
-    case STARTGUI: 
+    case STARTGUI:
+      startGUI.show();
       playScreenGUI.hide();
       loadCityGUI.hide();
-      startGUI.show();
+      
+      skyline.resize(840, 300);
+      castellar = createFont("Castellar", 30);
+      textFont(castellar);
+  
+   
+      background(color(52,56,129));
+  
+      pushMatrix();
+      scale(1.2);
+      image(skyline,0,200);
+      popMatrix();
+  
+      stroke(0);
+      fill(255);
+      textSize(30);
+      text("City Skyscraper", 360,345);
+  
+      // Displays buttons for user to select action
+      createNewCity.display();
+      loadExistingCity.display();
       
       //testbird.display();
       //testbird.move();
@@ -766,6 +776,7 @@ void Load() {
 void mainMenu() {
   println("menu() function called");
   state = GameState.STARTGUI;
+  println (state);
   currentDeleteBuildingIndex = 0;
   currentEditBuildingIndex = 0;
 }
@@ -783,7 +794,6 @@ void mousePressed() {
   else if(state == GameState.STARTGUI && mouseX > loadExistingCity.x && mouseX < (loadExistingCity.x + loadExistingCity.w) && mouseY > loadExistingCity.y && mouseY < (loadExistingCity.y + loadExistingCity.h)) {
     println("Load existing city!");
     state = GameState.LOADCITYGUI;
-    //createLoadScreen();
 
   }
   
