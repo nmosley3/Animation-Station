@@ -90,6 +90,7 @@ void setup(){
   // Loading sound file
   path = sketchPath("urban_traffic.mp3");
   main = new SoundFile(this,path);
+  main.loop();
   
   path2 = sketchPath("rain_and_thunder.mp3");
   rain = new SoundFile(this,path2);
@@ -137,7 +138,8 @@ void draw() {
       textFont(castellar);
   
    
-      background(color(52,56,129));
+      //background(color(52,56,129));
+      background(color(75,79,157));
   
       pushMatrix();
       scale(1.2);
@@ -146,8 +148,8 @@ void draw() {
   
       stroke(0);
       fill(255);
-      textSize(30);
-      text("City Skyscraper", 360,345);
+      textSize(50);
+      text("City Skyscraper", 270,120);
   
       // Displays buttons for user to select action
       createNewCity.display();
@@ -217,11 +219,11 @@ void draw() {
         
       stroke(0);
       fill(255);
-      textSize(30);
       textFont(castellar);
-      text("City Skyscraper", 360,345);
+      textSize(50);
+      text("City Skyscraper", 270,120);
       textSize(20);
-      text("Enter name of previously created skyline",240,400);
+      text("Enter name of previously created skyline",240,200);
       startGUI.hide();
       playScreenGUI.hide();
       loadCityGUI.show();
@@ -412,8 +414,8 @@ void createStartScreen(){
   textFont(castellar);
   
    // Initializing buttons
-  createNewCity = new Button(390,400,250,40,color(255),"Create New Skyline");
-  loadExistingCity = new Button(390,470,250,40,color(255),"Load Existing Skyline");
+  createNewCity = new Button(390,180,250,40,color(255),"Create New Skyline");
+  loadExistingCity = new Button(390,250,250,40,color(255),"Load Existing Skyline");
   
   background(color(52,56,129));
   
@@ -424,8 +426,8 @@ void createStartScreen(){
   
   stroke(0);
   fill(255);
-  textSize(30);
-  text("City Skyscraper", 360,345);
+  textSize(40);
+  text("City Skyscraper", 320,200);
   
   // Displays buttons for user to select action
   createNewCity.display();
@@ -446,15 +448,15 @@ void createLoadScreen(){
   
   
   loadCityGUI.addTextfield(" ")
-   .setPosition(350,415)
-   .setSize(300, 30)
+   .setPosition(350,220)
+   .setSize(300, 40)
    .setFont(arial)
    .setFocus(true)
    .setColor(color(255))
   ;
   
   loadCityGUI.addButton("Load")
-    .setPosition(450, 450)
+    .setPosition(450, 280)
     .setSize(100, 35)
     ;
   
@@ -539,21 +541,6 @@ void controlEvent(ControlEvent theEvent){
   }
   
   else if(theEvent.isFrom(soundrb)){
-    // HOW TO GET SOUND TO PLAY WHEN GAME STARTS & TOGGLE ON/OFF?
-    //soundCount += 1;    
-    
-    /*
-    // Plays sound when sound icon is "on"
-    if (soundCount % 2 == 0) {
-      file.play();
-    }
-    
-    // Stops playing sound when sound icon is "off"
-    else if (soundCount % 2 != 0) {
-      file.stop();
-    }
-    
-    */
     
     // Toggles the button based on user selection
     if (mainSound == true) {
@@ -601,12 +588,14 @@ void controlEvent(ControlEvent theEvent){
     
     // Plays sound when sound icon is "on"
     if (birdSoundCount % 2 != 0) {
-      bird.play();
+      bird.loop();
+      println("Birds turned on");
     }
     
     // Stops playing sound when sound icon is "off"
     else if (birdSoundCount % 2 == 0) {
       bird.stop();
+      println("Birds turned off");
      
     }
     
@@ -625,50 +614,17 @@ void controlEvent(ControlEvent theEvent){
     
     // Plays sound when sound icon is "on"
     if (rainSoundCount % 2 != 0) {
-      rain.play();
+      println("Rain turned on");
+      rain.loop();
     }
     
     // Stops playing sound when sound icon is "off"
     else if (rainSoundCount % 2 == 0) {
+      println("Rain turned off");
       rain.stop();
     }
     
     
-
-    //Rakshana: Can't tell which switch it is on, but here you can switch the sound of storm to on or off
-    //even if storm is pressed -- make sure you check to see if sound is muted because that
-    //will affect if the storm sound is actually displayed
-     /*
-    if(rainSound == true) {
-      rainSound = false;
-    }
-    
-    else if (rainSound == false) {
-      rainSound = true;
-    }
-    
-   
-    if (mainSound == true && rainSound == true) {
-      rain.play();
-      main.stop(); 
-    }
-    
-    else if (mainSound == true && rainSound == false) {
-      main.play();
-      rain.stop();
-    }
-    
-    else if (mainSound == false && rainSound == true) {
-      main.stop();
-      rain.stop();
-    }
-    
-    else if (mainSound == false && rainSound == false) {
-      main.stop();
-      rain.stop();
-      
-    }
-    */
   }
   else if(theEvent.isGroup()){
     if (theEvent.getGroup() == legend && theEvent.getGroup().isOpen()){
