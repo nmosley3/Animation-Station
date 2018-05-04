@@ -28,12 +28,21 @@ class Building {
       blockHeight = 5 * modifier;
       topHeight = 19 * modifier;
       this.buildingWidth = 34 * modifier;
+      this.maxBlocks = 9;
       
     } else if (buildingType == 2) {
       baseHeight = 45 * modifier;
       blockHeight = 5 * modifier;
       topHeight = 11 * modifier;
       this.buildingWidth = 20 * modifier;
+      this.maxBlocks = 9;
+      
+    } else if(buildingType == 3) {
+      baseHeight = 66 * modifier;
+      blockHeight = 8* modifier;
+      topHeight = 25 * modifier;
+      this.buildingWidth = 25 * modifier;
+      this.maxBlocks = 5;
     }
 
   }

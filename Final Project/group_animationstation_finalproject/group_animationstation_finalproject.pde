@@ -172,6 +172,15 @@ void draw() {
       //if (display_images){
       //    displayBuildingImages();
       // }
+      
+      displayAllBuildings();
+      if (editingBuilding && allBuildings.size() > 0) {
+        image(editingImg, allBuildings.get(currentEditBuildingIndex).x + allBuildings.get(currentEditBuildingIndex).buildingWidth / 2 - editingImg.width / 2, 565 - editingImg.height / 2);
+      }
+  
+      if (deletingBuilding && allBuildings.size() > 0) {
+        image(deletingImg, allBuildings.get(currentDeleteBuildingIndex).x + allBuildings.get(currentDeleteBuildingIndex).buildingWidth / 2 - deletingImg.width / 2, 565 - deletingImg.height / 2);
+      }
        
     
        startGUI.hide();
@@ -231,15 +240,6 @@ void draw() {
     
   }
   
-  displayAllBuildings();
-  if (editingBuilding && allBuildings.size() > 0) {
-    image(editingImg, allBuildings.get(currentEditBuildingIndex).x + allBuildings.get(currentEditBuildingIndex).buildingWidth / 2 - editingImg.width / 2, 565 - editingImg.height / 2);
-  }
-  
-  if (deletingBuilding && allBuildings.size() > 0) {
-    image(deletingImg, allBuildings.get(currentDeleteBuildingIndex).x + allBuildings.get(currentDeleteBuildingIndex).buildingWidth / 2 - deletingImg.width / 2, 565 - deletingImg.height / 2);
-
-  }
   
 }
 
@@ -501,7 +501,7 @@ void controlEvent(ControlEvent theEvent){
     }
     else if (theEvent.getValue() == 2.0) {
       println("Building Three Chosen");
-      // currentBuildingIndex = 3;
+      currentBuildingIndex = 3;
     }
     
   }
@@ -724,6 +724,7 @@ void mainMenu() {
   println (state);
   currentDeleteBuildingIndex = 0;
   currentEditBuildingIndex = 0;
+  allBuildings.clear();
 }
 
 void mousePressed() {
