@@ -64,6 +64,7 @@ class Bird{
     else{
       directionWing1 = directionWing1 * -1;
       wing1Counter = 0;
+      
     }
     
     //wing2
@@ -88,6 +89,7 @@ class Bird{
   
   void move(){
     
+   
     if (xPosition < 800){
       
       xPosition += 1; 
@@ -99,6 +101,7 @@ class Bird{
       xPosition= -5;
     }
     
+    yPosition = yPosition + sin(xPosition/20);
     
   }
   
