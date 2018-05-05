@@ -700,14 +700,10 @@ void saveFile() {
 void Save() {
   saveCityName = cityNameInput.getText();
   saveFile = new File(sketchPath(saveCityName + ".txt"));
-  if (saveFile.exists()) {
-    println("That city already exists, would you like to overwrite it?");
-  } else {
-    newSave = new SaveFile(saveCityName);
-    newSave.outputSaveFile();
-    println("city successfully saved");
-    savingCity = false;
-  }
+  newSave = new SaveFile(saveCityName);
+  newSave.outputSaveFile();
+  println("city successfully saved");
+  savingCity = false;
   
 }
 
