@@ -90,7 +90,7 @@ void setup(){
   // Loading sound file
   path = sketchPath("urban_traffic.mp3");
   main = new SoundFile(this,path);
-  main.loop();
+  main.play();
   
   path2 = sketchPath("rain_storm.mp3");
   rain = new SoundFile(this,path2);
@@ -162,7 +162,6 @@ void draw() {
       textFont(castellar);
       createNewCity.display();
       loadExistingCity.display();
-      //main.play();
       //testbird.display();
       //testbird.move();
       
@@ -436,7 +435,7 @@ void createStartScreen(){
   // Displays buttons for user to select action
   createNewCity.display();
   loadExistingCity.display();
-  
+   
   
 }
 
@@ -559,7 +558,6 @@ void controlEvent(ControlEvent theEvent){
     if (mainSound == true) {
       // Loading a sound file
       
-      //main.play();
       main.loop();
     }
     
@@ -570,17 +568,12 @@ void controlEvent(ControlEvent theEvent){
     
     
     println("Sound is being pressed");
-    //Rakshana: Can't tell which switch it is on, but from here we can basically make a sound boolean
-    //the opposite of what it was
-    
+ 
   
   }
   
   else if (theEvent.isFrom(birdrb)){
     println("Bird is being pressed");
-    //Rakshana: Can't tell which switch it is on, but here you can switch the sound of bird to on or off
-    //even if bird is pressed -- make sure you check to see if sound is muted because that
-    //will affect if the bird sound is actually displayed
     
     birdSoundCount += 1;   
     
