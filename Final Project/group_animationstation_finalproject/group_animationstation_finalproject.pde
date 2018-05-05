@@ -757,7 +757,6 @@ void mousePressed() {
   else if(state == GameState.STARTGUI && mouseX > loadExistingCity.x && mouseX < (loadExistingCity.x + loadExistingCity.w) && mouseY > loadExistingCity.y && mouseY < (loadExistingCity.y + loadExistingCity.h)) {
     println("Load existing city!");
     state = GameState.LOADCITYGUI;
-    main.play();
 
   }
   
