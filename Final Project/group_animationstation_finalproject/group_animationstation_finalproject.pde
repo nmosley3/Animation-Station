@@ -719,7 +719,6 @@ void Load() {
   allBuildings.clear();
   for (int i = 0; i < buildingsLoaded.length; i ++) {
     buildingData = buildingsLoaded[i].split(", ");
-    print(buildingData[1]);
     allBuildings.add(new Building(int(buildingData[0]), int(buildingData[1]), int(buildingData[2])));
   }
   state = GameState.PLAYSCREENGUI;
