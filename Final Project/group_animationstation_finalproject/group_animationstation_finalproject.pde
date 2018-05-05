@@ -704,6 +704,8 @@ void Save() {
   newSave.outputSaveFile();
   println("city successfully saved");
   savingCity = false;
+  cityNameInput.hide();
+  saveCityButton.hide();
   
 }
 
@@ -732,6 +734,12 @@ void mainMenu() {
   currentDeleteBuildingIndex = 0;
   currentEditBuildingIndex = 0;
   allBuildings.clear();
+  savingCity = false;
+  editingBuilding = false;
+  deletingBuilding = false;
+  placingBuilding = false;
+  cityNameInput.hide();
+  saveCityButton.hide();
 }
 
 void mousePressed() {
