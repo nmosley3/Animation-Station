@@ -92,7 +92,7 @@ void setup(){
   main = new SoundFile(this,path);
   main.loop();
   
-  path2 = sketchPath("rain_and_thunder.mp3");
+  path2 = sketchPath("rain_storm.mp3");
   rain = new SoundFile(this,path2);
   
   path3 = sketchPath("birds_chirping.mp3");
@@ -129,6 +129,7 @@ void draw() {
   switch(state){
     
     case STARTGUI:
+    
       startGUI.show();
       playScreenGUI.hide();
       loadCityGUI.hide();
@@ -161,7 +162,7 @@ void draw() {
       textFont(castellar);
       createNewCity.display();
       loadExistingCity.display();
-      
+      //main.play();
       //testbird.display();
       //testbird.move();
       
@@ -407,7 +408,6 @@ void createPlayScreen(){
 
 
 void createStartScreen(){
-  
   startGUI = new ControlP5(this);
   //skyline = loadImage("skyline.png");
   skyline = loadImage("city.jpg");
@@ -559,7 +559,8 @@ void controlEvent(ControlEvent theEvent){
     if (mainSound == true) {
       // Loading a sound file
       
-      main.play();
+      //main.play();
+      main.loop();
     }
     
     // If sound icon is "off", mutes the sound
@@ -749,12 +750,14 @@ void mousePressed() {
     println("Create new city!");
     state = GameState.PLAYSCREENGUI;
     
+    
   }
   
   // If "Load Existing City" button is pressed, user is taken to the screen to load in an pre-existing city  
   else if(state == GameState.STARTGUI && mouseX > loadExistingCity.x && mouseX < (loadExistingCity.x + loadExistingCity.w) && mouseY > loadExistingCity.y && mouseY < (loadExistingCity.y + loadExistingCity.h)) {
     println("Load existing city!");
     state = GameState.LOADCITYGUI;
+    main.play();
 
   }
   
