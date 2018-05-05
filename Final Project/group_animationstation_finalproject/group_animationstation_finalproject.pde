@@ -92,7 +92,7 @@ void setup(){
   main = new SoundFile(this,path);
   main.loop();
   
-  path2 = sketchPath("rain_and_thunder.mp3");
+  path2 = sketchPath("rain_storm.mp3");
   rain = new SoundFile(this,path2);
   
   path3 = sketchPath("birds_chirping.mp3");
@@ -129,6 +129,7 @@ void draw() {
   switch(state){
     
     case STARTGUI:
+    
       startGUI.show();
       playScreenGUI.hide();
       loadCityGUI.hide();
@@ -161,7 +162,7 @@ void draw() {
       textFont(castellar);
       createNewCity.display();
       loadExistingCity.display();
-      
+      //main.play();
       //testbird.display();
       //testbird.move();
       
@@ -407,7 +408,6 @@ void createPlayScreen(){
 
 
 void createStartScreen(){
-  
   startGUI = new ControlP5(this);
   //skyline = loadImage("skyline.png");
   skyline = loadImage("city.jpg");
@@ -559,7 +559,8 @@ void controlEvent(ControlEvent theEvent){
     if (mainSound == true) {
       // Loading a sound file
       
-      main.play();
+      //main.play();
+      main.loop();
     }
     
     // If sound icon is "off", mutes the sound
@@ -704,6 +705,8 @@ void Save() {
   newSave.outputSaveFile();
   println("city successfully saved");
   savingCity = false;
+  cityNameInput.hide();
+  saveCityButton.hide();
   
 }
 
@@ -732,6 +735,12 @@ void mainMenu() {
   currentDeleteBuildingIndex = 0;
   currentEditBuildingIndex = 0;
   allBuildings.clear();
+  savingCity = false;
+  editingBuilding = false;
+  deletingBuilding = false;
+  placingBuilding = false;
+  cityNameInput.hide();
+  saveCityButton.hide();
 }
 
 void mousePressed() {
@@ -740,6 +749,7 @@ void mousePressed() {
   if(state == GameState.STARTGUI && mouseX > createNewCity.x && mouseX < (createNewCity.x + createNewCity.w) && mouseY > createNewCity.y && mouseY < (createNewCity.y + createNewCity.h)) {
     println("Create new city!");
     state = GameState.PLAYSCREENGUI;
+    
     
   }
   
